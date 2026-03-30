@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>⛏ Minecraft Hero Chart</title>
+<meta name="theme-color" content="#1a1a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hero Chart">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --gold:#FECE3E;--gold-dark:#7A5C00;--diamond:#4FEAC9;--emerald:#17DD62;
+  --panel:#2d2d2d;--dark:#1a1a2e;--gray:#aaa;
+  --green-bg:#1a3a0a;--green-border:#3a6a1a;--green-text:#5D8A2C;--green-light:#c8e098;
+  --gold-bg:#3a2a00;--gold-border:#6a5000;--gold-text:#FECE3E;--gold-light:#e8d090;
+  --red-bg:#3a0a0a;--red-border:#6a1a1a;--red-text:#FF6B6B;--red-light:#f0b0b0;
+  --teal-bg:#043a34;--teal-border:#0a5a50;--teal-text:#4FEAC9;--teal-light:#a0e0d4;
+}
+html,body{height:100%;background:var(--dark);font-family:'Press Start 2P','Courier New',monospace;}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100dvh;padding:14px 12px 40px;}
+.page.active{display:block;}
+
+/* ── SHARED ── */
+.mc-title{text-align:center;font-size:13px;color:var(--gold);text-shadow:2px 2px var(--gold-dark);margin-bottom:3px;}
+.mc-sub{text-align:center;font-size:6px;color:#777;margin-bottom:16px;line-height:2;}
+.mc-btn{background:#444;border:3px solid;border-color:#888 #222 #222 #888;color:#fff;font-family:inherit;font-size:8px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation;}
+.mc-btn:active{border-color:#222 #888 #888 #222;opacity:.8;}
+.big-btn{width:100%;padding:18px 12px;font-size:10px;margin-top:20px;background:#1a3a1a;border:3px solid;border-color:var(--emerald) #0a1a0a #0a1a0a var(--emerald);color:var(--emerald);font-family:inherit;cursor:pointer;touch-action:manipulation;display:block;}
+.big-btn:active{opacity:.8;}
+
+/* ══════════════════════════════
+   PAGE 1 — INTRO
+══════════════════════════════ */
+.intro-section{background:var(--panel);border:3px solid;border-color:#555 #111 #111 #555;padding:12px;margin-bottom:12px;}
+.section-title{font-size:8px;color:var(--gold);margin-bottom:10px;line-height:1.8;}
+.body-text{font-size:6px;color:#ccc;line-height:2.4;margin-bottom:8px;}
+
+/* how-to steps */
+.step{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
+.step-num{background:var(--gold);color:#3a2a00;font-size:7px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--gold-dark);}
+.step-text{font-size:6px;color:#ccc;line-height:2.2;}
+
+/* period reward pills */
+.reward-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;}
+.pill{background:#1a1a00;border:2px solid #6a5000;padding:8px 4px;text-align:center;font-size:5px;color:var(--gold);line-height:2;}
+.pill .pill-icon{font-size:16px;display:block;margin-bottom:3px;}
+
+/* goal cards */
+.goal-card{border:3px solid;margin-bottom:10px;overflow:hidden;}
+.goal-header{display:flex;align-items:center;gap:10px;padding:10px 12px;}
+.goal-icon-big{font-size:26px;flex-shrink:0;}
+.goal-title-wrap{flex:1;}
+.goal-name{font-size:7px;margin-bottom:4px;line-height:1.7;}
+.goal-tagline{font-size:5px;line-height:2;}
+.goal-body{padding:10px 12px;border-top:2px solid;}
+.what-label{font-size:5px;margin-bottom:5px;letter-spacing:.06em;}
+.goal-desc{font-size:6px;line-height:2.3;margin-bottom:10px;}
+.example-box{border:2px solid;border-radius:3px;padding:8px 10px;}
+.example-label{font-size:5px;margin-bottom:5px;letter-spacing:.08em;}
+.example-text{font-size:6px;line-height:2.2;}
+
+.card-green .goal-header{background:var(--green-bg);} .card-green{border-color:var(--green-border);}
+.card-green .goal-name{color:var(--green-text);} .card-green .goal-tagline{color:#7ab840;}
+.card-green .goal-body{background:#141a0a;border-top-color:#2a4a10;}
+.card-green .what-label{color:var(--green-text);} .card-green .goal-desc{color:#b0cc88;}
+.card-green .example-box{border-color:var(--green-border);background:#1a2a08;}
+.card-green .example-label{color:var(--green-text);} .card-green .example-text{color:var(--green-light);}
+
+.card-gold .goal-header{background:var(--gold-bg);} .card-gold{border-color:var(--gold-border);}
+.card-gold .goal-name{color:var(--gold-text);} .card-gold .goal-tagline{color:#c8a030;}
+.card-gold .goal-body{background:#1a1400;border-top-color:#4a3800;}
+.card-gold .what-label{color:var(--gold-text);} .card-gold .goal-desc{color:#c8b060;}
+.card-gold .example-box{border-color:var(--gold-border);background:#221800;}
+.card-gold .example-label{color:var(--gold-text);} .card-gold .example-text{color:var(--gold-light);}
+
+.card-red .goal-header{background:var(--red-bg);} .card-red{border-color:var(--red-border);}
+.card-red .goal-name{color:var(--red-text);} .card-red .goal-tagline{color:#cc4444;}
+.card-red .goal-body{background:#180808;border-top-color:#4a1010;}
+.card-red .what-label{color:var(--red-text);} .card-red .goal-desc{color:#cc9090;}
+.card-red .example-box{border-color:var(--red-border);background:#220808;}
+.card-red .example-label{color:var(--red-text);} .card-red .example-text{color:var(--red-light);}
+
+.card-teal .goal-header{background:var(--teal-bg);} .card-teal{border-color:var(--teal-border);}
+.card-teal .goal-name{color:var(--teal-text);} .card-teal .goal-tagline{color:#2aaa90;}
+.card-teal .goal-body{background:#041a16;border-top-color:#0a4a40;}
+.card-teal .what-label{color:var(--teal-text);} .card-teal .goal-desc{color:#80c8bc;}
+.card-teal .example-box{border-color:var(--teal-border);background:#021412;}
+.card-teal .example-label{color:var(--teal-text);} .card-teal .example-text{color:var(--teal-light);}
+
+/* ══════════════════════════════
+   PAGE 2 — CHART
+══════════════════════════════ */
+.date-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.date-label{flex:1;font-size:7px;color:#fff;text-align:center;line-height:2;}
+
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:12px;}
+.tab{background:#333;border:3px solid;border-color:#666 #111 #111 #666;color:#888;font-family:inherit;font-size:6px;padding:10px 4px;cursor:pointer;text-align:center;line-height:1.8;touch-action:manipulation;}
+.tab.active{background:#1a2a1a;border-color:var(--emerald) #0a1a0a #0a1a0a var(--emerald);color:var(--emerald);}
+.tab .tab-score{display:block;font-size:9px;margin-top:3px;color:var(--diamond);}
+
+.period-panel{background:var(--panel);border:3px solid;border-color:#555 #111 #111 #555;padding:12px 10px;margin-bottom:12px;}
+.period-heading{font-size:9px;color:var(--gold);margin-bottom:14px;text-align:center;}
+
+.behavior-btn{width:100%;background:#3a3a3a;border:3px solid;border-color:#777 #1a1a1a #1a1a1a #777;display:flex;align-items:center;gap:12px;padding:14px 12px;margin-bottom:8px;cursor:pointer;touch-action:manipulation;text-align:left;transition:transform .08s;}
+.behavior-btn:last-of-type{margin-bottom:0;}
+.behavior-btn:active{transform:scale(.98);border-color:#1a1a1a #777 #777 #1a1a1a;}
+.behavior-btn.earned{background:#1a3a1a;border-color:var(--emerald) #0a1a0a #0a1a0a var(--emerald);animation:mcpop .15s ease;}
+@keyframes mcpop{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+.b-color-bar{width:6px;height:48px;flex-shrink:0;border-radius:2px;}
+.b-icon{font-size:22px;flex-shrink:0;}
+.b-label{font-size:7px;color:#ccc;line-height:1.8;display:block;flex:1;}
+.b-state{font-size:20px;flex-shrink:0;}
+
+.period-reward-strip{margin-top:12px;padding:10px 8px;background:#1a1a00;border:3px solid;border-color:#6a5a00 #1a1000 #1a1000 #6a5a00;text-align:center;font-size:6px;color:#aaa;line-height:2;}
+.period-reward-strip.unlocked{background:#0a2a0a;border-color:var(--emerald) #041404 #041404 var(--emerald);color:var(--emerald);}
+
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
+.summary-cell{background:#333;border:3px solid;border-color:#555 #111 #111 #555;padding:8px 4px;text-align:center;}
+.summary-cell.unlocked{background:#0a2a0a;border-color:var(--emerald) #041404 #041404 var(--emerald);}
+.sc-name{font-size:5px;color:var(--gray);margin-bottom:4px;}
+.sc-gems{font-size:14px;}
+.sc-status{font-size:5px;margin-top:3px;}
+.summary-cell.unlocked .sc-status{color:var(--emerald);}
+.summary-cell.locked .sc-status{color:#666;}
+
+.xp-wrap{margin-bottom:10px;}
+.xp-label{font-size:6px;color:var(--gray);margin-bottom:5px;}
+.xp-track{height:20px;background:#111;border:3px solid;border-color:#222 #555 #555 #222;position:relative;overflow:hidden;}
+.xp-fill{height:100%;background:var(--emerald);transition:width .35s ease;}
+.xp-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:7px;color:#fff;text-shadow:1px 1px #000;white-space:nowrap;}
+
+.day-card{background:var(--panel);border:3px solid;border-color:#555 #111 #111 #555;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.day-label{font-size:6px;color:var(--gray);}
+.day-val{font-size:10px;color:var(--diamond);}
+.day-reward{font-size:7px;color:var(--gold);display:none;margin-top:4px;text-align:right;}
+
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.action-btn{font-family:inherit;font-size:7px;padding:13px 8px;border:3px solid;cursor:pointer;width:100%;touch-action:manipulation;}
+.action-btn:active{opacity:.8;}
+.btn-reset{background:#5a1a1a;border-color:#993333 #1a0000 #1a0000 #993333;color:#ffaaaa;}
+.btn-back{background:#1a2a4a;border-color:#336699 #001122 #001122 #336699;color:#aaccff;}
+
+
+.safe-bottom{height:calc(16px + env(safe-area-inset-bottom));}
+.install-wrap{display:flex;gap:8px;margin:10px 0 14px;}
+.install-btn{flex:1;background:#0a2a0a;border-color:var(--emerald) #041404 #041404 var(--emerald);color:var(--emerald);min-height:48px;font-size:7px;display:none;}
+.install-btn.show{display:flex;}
+.note-chip{background:#222;border:2px solid #444;color:#bbb;font-size:5px;padding:8px;line-height:1.9;text-align:center;}
+@media (min-width: 700px){
+  body{display:flex;justify-content:center;}
+  .page{width:min(480px,100%);}
+}
+body{overscroll-behavior:none;}
+.big-btn,.action-btn,.tab,.behavior-btn,.mc-btn{min-height:48px;}
+.behavior-btn{scroll-margin-top:12px;}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════ PAGE 1: INTRO ══════════ -->
+<div class="page active" id="page-intro">
+  <div style="padding:14px 12px 40px;">
+
+    <div class="mc-title">⛏ HERO CHART ⛏</div>
+    <div class="mc-sub">read this together before you play!</div>
+
+    <!-- HOW IT WORKS -->
+    <div class="intro-section">
+      <div class="section-title">📖 HOW IT WORKS</div>
+      <div class="step"><div class="step-num">1</div><div class="step-text">Each day is split into 3 parts: Morning, Midday, and Evening.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">In each part, there are 4 things you can do to earn a 💎 diamond.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Get 3 out of 4 diamonds in a part = you unlock a small reward RIGHT AWAY!</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Get 10 or more diamonds for the whole day = LEGENDARY reward! 🏆</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-text">Your grown-up taps the diamond when you earn it. Tap again to remove it.</div></div>
+    </div>
+
+    <!-- REWARD IDEAS -->
+    <div class="intro-section">
+      <div class="section-title">🎁 REWARD IDEAS</div>
+      <div class="body-text">Rewards work best when they happen RIGHT AWAY after each period!</div>
+      <div class="reward-pills">
+        <div class="pill"><span class="pill-icon">📱</span>15 MIN SCREEN TIME</div>
+        <div class="pill"><span class="pill-icon">🍿</span>PICK A SNACK</div>
+        <div class="pill"><span class="pill-icon">🎮</span>CHOOSE AN ACTIVITY</div>
+        <div class="pill"><span class="pill-icon">🛁</span>PICK BUBBLE BATH</div>
+        <div class="pill"><span class="pill-icon">📖</span>PICK BEDTIME BOOK</div>
+        <div class="pill"><span class="pill-icon">🏆</span>SPECIAL TREAT</div>
+      </div>
+    </div>
+
+    <!-- GOAL CARDS -->
+    <div class="intro-section" style="padding-bottom:4px;">
+      <div class="section-title">⭐ THE 4 HERO GOALS</div>
+    </div>
+
+    <div class="goal-card card-green">
+      <div class="goal-header">
+        <span class="goal-icon-big">👂</span>
+        <div class="goal-title-wrap">
+          <div class="goal-name">LISTENING &amp; FOLLOWING DIRECTIONS</div>
+          <div class="goal-tagline">when a grown-up says something, you do it</div>
+        </div>
+      </div>
+      <div class="goal-body">
+        <div class="what-label">WHAT THIS MEANS:</div>
+        <div class="goal-desc">When mom, dad, or your teacher tells you to do something — like "time to put shoes on" or "come sit down" — you stop what you're doing and give it a try. Even if you don't want to, heroes try!</div>
+        <div class="example-box">
+          <div class="example-label">💎 HERO EXAMPLE:</div>
+          <div class="example-text">Mom says "time to turn off Minecraft." Instead of saying NO, you say "okay" and turn it off. BOOM — diamond earned!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goal-card card-gold">
+      <div class="goal-header">
+        <span class="goal-icon-big">🦺</span>
+        <div class="goal-title-wrap">
+          <div class="goal-name">STAYING SAFE &amp; CLOSE BY</div>
+          <div class="goal-tagline">your body stays where grown-ups can see you</div>
+        </div>
+      </div>
+      <div class="goal-body">
+        <div class="what-label">WHAT THIS MEANS:</div>
+        <div class="goal-desc">You stay in safe places where your grown-up can always see you. No running into the street, running away from the group, or going somewhere without telling an adult first. Being safe means being seen!</div>
+        <div class="example-box">
+          <div class="example-label">💎 HERO EXAMPLE:</div>
+          <div class="example-text">At the store, instead of running to another aisle, you walk right next to mom and hold the cart. Your grown-up gives you a thumbs up — diamond earned!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goal-card card-red">
+      <div class="goal-header">
+        <span class="goal-icon-big">🤲</span>
+        <div class="goal-title-wrap">
+          <div class="goal-name">SAFE HANDS &amp; BODY</div>
+          <div class="goal-tagline">your body is kind to everyone around you</div>
+        </div>
+      </div>
+      <div class="goal-body">
+        <div class="what-label">WHAT THIS MEANS:</div>
+        <div class="goal-desc">We keep our hands, feet, and body to ourselves. No hitting, kicking, pushing, or grabbing — even if we feel really mad or really excited. Our body is strong, so we use it to help, not hurt.</div>
+        <div class="example-box">
+          <div class="example-label">💎 HERO EXAMPLE:</div>
+          <div class="example-text">Your friend has a toy you want. Instead of grabbing it, you say "can I have a turn?" and wait. You used your words like a total HERO — diamond earned!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goal-card card-teal">
+      <div class="goal-header">
+        <span class="goal-icon-big">🧘</span>
+        <div class="goal-title-wrap">
+          <div class="goal-name">USING CALM-DOWN TOOLS</div>
+          <div class="goal-tagline">when big feelings come, you use your superpowers</div>
+        </div>
+      </div>
+      <div class="goal-body">
+        <div class="what-label">WHAT THIS MEANS:</div>
+        <div class="goal-desc">Sometimes our body feels like it has TOO MUCH energy or we get really upset. Instead of exploding, we use a calm-down tool — like taking deep breaths, squeezing something soft, jumping 10 times, or asking for a hug.</div>
+        <div class="example-box">
+          <div class="example-label">💎 HERO EXAMPLE:</div>
+          <div class="example-text">You feel really mad because it's time to stop playing. You take 3 big deep breaths like a Creeper slowly exhaling... and your body calms down. LEGENDARY — diamond earned!</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="big-btn" onclick="goToChart()">⚔ LET'S PLAY! ⚔</button>
+
+  </div>
+</div>
+
+<!-- ══════════ PAGE 2: CHART ══════════ -->
+<div class="page" id="page-chart">
+  <div style="padding:14px 12px 40px;">
+
+    <div class="mc-title">⛏ HERO CHART ⛏</div>
+    <div class="mc-sub">tap a diamond to earn it!</div>
+
+    <div class="install-wrap">
+      <button class="mc-btn install-btn" id="install-btn">⬇ INSTALL ON PHONE</button>
+    </div>
+    <div class="note-chip" id="install-note">Open in Safari or Chrome and add to Home Screen for an app-like experience.</div>
+
+    <div class="date-bar">
+      <button class="mc-btn" style="width:44px;height:44px;" onclick="changeDay(-1)">◀</button>
+      <div class="date-label" id="date-label"></div>
+      <button class="mc-btn" style="width:44px;height:44px;" onclick="changeDay(1)">▶</button>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" onclick="setTab(0)" id="tab0">🌅<br>MORNING<span class="tab-score" id="tscore0">0/4</span></button>
+      <button class="tab"        onclick="setTab(1)" id="tab1">☀️<br>MIDDAY<span class="tab-score" id="tscore1">0/4</span></button>
+      <button class="tab"        onclick="setTab(2)" id="tab2">🌙<br>EVENING<span class="tab-score" id="tscore2">0/4</span></button>
+    </div>
+
+    <div class="period-panel" id="period-panel"></div>
+
+    <div class="summary" id="summary"></div>
+
+    <div class="xp-wrap">
+      <div class="xp-label">DAILY XP BAR</div>
+      <div class="xp-track">
+        <div class="xp-fill" id="xp-fill" style="width:0%"></div>
+        <div class="xp-text" id="xp-text">0 / 12 XP</div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-label">TOTAL XP TODAY</div>
+      <div>
+        <div class="day-val" id="day-total">0 / 12</div>
+        <div class="day-reward" id="day-reward">🏆 LEGENDARY REWARD!</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="action-btn btn-reset" onclick="resetDay()">☠ RESET DAY</button>
+      <button class="action-btn btn-back"  onclick="goToIntro()">📖 BACK TO RULES</button>
+    </div>
+
+    <div class="safe-bottom"></div>
+</div>
+</div>
+
+<script>
+const BEHAVIORS=[
+  {id:'directions',icon:'👂',label:'Listened & followed directions',color:'#5D8A2C'},
+  {id:'safe',      icon:'🦺',label:'Stayed safe and close by',      color:'#D4A017'},
+  {id:'hands',     icon:'🤲',label:'Kept hands & body safe',        color:'#CC3333'},
+  {id:'calm',      icon:'🧘',label:'Used calm-down tools',          color:'#1A8A70'},
+];
+const PERIODS=['🌅 MORNING','☀️ MIDDAY','🌙 EVENING'];
+const PERIOD_GOAL=3, DAY_GOAL=10;
+
+let state={};
+try{state=JSON.parse(localStorage.getItem('mc_hero_v2')||'{}');}catch(e){}
+let currentDate=new Date(), activeTab=0;
+let deferredPrompt=null;
+
+function dateKey(d){return d.toISOString().slice(0,10);}
+function getDay(){return state[dateKey(currentDate)]||{};}
+function setDay(data){state[dateKey(currentDate)]=data;try{localStorage.setItem('mc_hero_v2',JSON.stringify(state));}catch(e){}}
+
+function toggle(pIdx,bid){
+  const day=getDay(), k=pIdx+'_'+bid;
+  day[k]=!day[k]; setDay(day); render();
+}
+
+setupInstall();
+registerSW();
+function periodTotal(day,pIdx){return BEHAVIORS.reduce((s,b)=>s+(day[pIdx+'_'+b.id]?1:0),0);}
+function grandTotal(day){return PERIODS.reduce((s,_,i)=>s+periodTotal(day,i),0);}
+
+function setTab(i){activeTab=i;render();}
+function changeDay(d){const nd=new Date(currentDate);nd.setDate(nd.getDate()+d);currentDate=nd;render();}
+function resetDay(){if(confirm('RESET TODAY? ALL XP LOST!')){setDay({});render();}}
+
+function goToChart(){
+  document.getElementById('page-intro').classList.remove('active');
+  document.getElementById('page-chart').classList.add('active');
+  window.scrollTo(0,0);
+  render();
+}
+
+setupInstall();
+registerSW();
+function goToIntro(){
+  document.getElementById('page-chart').classList.remove('active');
+  document.getElementById('page-intro').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+
+function setupInstall(){
+  const btn=document.getElementById('install-btn');
+  const note=document.getElementById('install-note');
+  window.addEventListener('beforeinstallprompt', (e)=>{
+    e.preventDefault();
+    deferredPrompt=e;
+    if(btn) btn.classList.add('show');
+    if(note) note.textContent='Install this on your phone for a real app icon and full-screen mode.';
+  });
+  if(btn){
+    btn.addEventListener('click', async ()=>{
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      try{ await deferredPrompt.userChoice; }catch(e){}
+      deferredPrompt=null;
+      btn.classList.remove('show');
+    });
+  }
+  window.addEventListener('appinstalled', ()=>{
+    if(btn) btn.classList.remove('show');
+    if(note) note.textContent='Installed. Open it from your home screen like an app.';
+  });
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  const standalone=window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if(isIOS && !standalone && note){
+    note.textContent='On iPhone: tap Share, then Add to Home Screen to use it like an app.';
+  }
+}
+
+function registerSW(){
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  }
+}
+
+function formatDate(d){
+  const today=new Date();today.setHours(0,0,0,0);
+  const t=new Date(d);t.setHours(0,0,0,0);
+  const diff=Math.round((t-today)/86400000);
+  const name=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}).toUpperCase();
+  if(diff===0) return 'TODAY — '+name;
+  if(diff===-1) return 'YESTERDAY — '+name;
+  if(diff===1) return 'TOMORROW — '+name;
+  return name;
+}
+
+function render(){
+  document.getElementById('date-label').textContent=formatDate(currentDate);
+  const day=getDay();
+
+  PERIODS.forEach((_,i)=>{
+    const pt=periodTotal(day,i);
+    document.getElementById('tscore'+i).textContent=pt+'/4';
+    document.getElementById('tab'+i).className='tab'+(i===activeTab?' active':'');
+  });
+
+  const panel=document.getElementById('period-panel');
+  const pt=periodTotal(day,activeTab);
+  let html=`<div class="period-heading">${PERIODS[activeTab]}</div>`;
+  BEHAVIORS.forEach(b=>{
+    const earned=!!day[activeTab+'_'+b.id];
+    html+=`<button class="behavior-btn${earned?' earned':''}" onclick="toggle(${activeTab},'${b.id}')">
+      <div class="b-color-bar" style="background:${b.color}"></div>
+      <span class="b-icon">${b.icon}</span>
+      <span class="b-label">${b.label}</span>
+      <span class="b-state">${earned?'💎':'<span style="opacity:.25;font-size:18px">◇</span>'}</span>
+    </button>`;
+  });
+  const unlocked=pt>=PERIOD_GOAL;
+  html+=`<div class="period-reward-strip ${unlocked?'unlocked':''}">
+    ${unlocked?'🎉 REWARD UNLOCKED! GREAT JOB! 🎉':'💎 GET '+(PERIOD_GOAL-pt)+' MORE DIAMOND'+((PERIOD_GOAL-pt)!==1?'S':'')+' FOR A REWARD!'}
+  </div>`;
+  panel.innerHTML=html;
+
+  const sumWrap=document.getElementById('summary');
+  sumWrap.innerHTML='';
+  PERIODS.forEach((_,i)=>{
+    const spt=periodTotal(day,i);
+    const ul=spt>=PERIOD_GOAL;
+    const el=document.createElement('div');
+    el.className='summary-cell '+(ul?'unlocked':'locked');
+    el.innerHTML=`<div class="sc-name">${['MORNING','MIDDAY','EVENING'][i]}</div>
+      <div class="sc-gems">${ul?'🎉':spt+'/3'}</div>
+      <div class="sc-status">${ul?'DONE!':'LOCKED'}</div>`;
+    sumWrap.appendChild(el);
+  });
+
+  const gt=grandTotal(day);
+  const pct=Math.min(Math.round(gt/12*100),100);
+  document.getElementById('xp-fill').style.width=pct+'%';
+  document.getElementById('xp-text').textContent=gt+' / 12 XP';
+  document.getElementById('day-total').textContent=gt+' / 12';
+  document.getElementById('day-reward').style.display=gt>=DAY_GOAL?'block':'none';
+}
+</script>
+</body>
+</html>
