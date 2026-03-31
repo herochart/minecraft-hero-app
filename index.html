@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0e0e20">
+<title>⛏ Hero Chart</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;700;800;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --dk:#0e0e20;--card:#1a1a36;--panel:#22223e;
+  --blt:#5555aa;--bdk:#111133;
+  --gold:#FECE3E;--gdk:#7A5C00;
+  --dia:#4FEAC9;--em:#17DD62;
+  --G:'Press Start 2P',monospace;--B:'Nunito',sans-serif;
+}
+html,body{background:var(--dk);color:#fff;font-family:var(--B);min-height:100vh;overflow-x:hidden;}
+
+/* PAGES */
+.pg{display:none;padding:16px 16px 100px;max-width:700px;margin:0 auto;}
+.pg.on{display:block;}
+
+/* LAYOUT BLOCKS */
+.card{background:var(--card);border:3px solid;border-color:var(--blt) var(--bdk) var(--bdk) var(--blt);border-radius:3px;margin-bottom:14px;padding:16px;}
+.inset{background:#0c0c22;border:2px solid #3a3a66;border-radius:3px;padding:14px;margin-bottom:12px;}
+.inset:last-child{margin-bottom:0;}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:8px;flex-wrap:wrap;}
+.nav-logo{font-family:var(--G);font-size:13px;color:var(--gold);text-shadow:3px 3px var(--gdk);white-space:nowrap;}
+.nav-r{display:flex;gap:6px;flex-wrap:wrap;}
+
+/* BUTTON BASE */
+.btn{font-family:var(--G);font-size:8px;padding:9px 11px;cursor:pointer;background:#252545;color:#ddd;
+  border:3px solid;border-color:#6666aa #101022 #101022 #6666aa;border-radius:2px;white-space:nowrap;line-height:1;}
+.btn:active{border-color:#101022 #6666aa #6666aa #101022;transform:translateY(1px);}
+.btn-em{background:#071a07;color:#88ff88;border-color:var(--em) #041004 #041004 var(--em);}
+.btn-go{background:#1a1000;color:var(--gold);border-color:var(--gold) #0a0500 #0a0500 var(--gold);}
+.btn-di{background:#031410;color:var(--dia);border-color:var(--dia) #011008 #011008 var(--dia);}
+.btn-pu{background:#140020;color:#cc88ff;border-color:#8833aa #1a0830 #1a0830 #8833aa;}
+.btn-block{display:block;width:100%;padding:16px;font-family:var(--G);font-size:10px;text-align:center;cursor:pointer;border-radius:3px;border:3px solid;line-height:1.8;}
+.btn-block:active{opacity:.85;}
+
+/* HOME PAGE NAV CARDS */
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.hnav{border:3px solid;border-radius:3px;padding:18px 14px;cursor:pointer;text-align:center;transition:transform .1s;}
+.hnav:active{transform:scale(.97);}
+.hnav-ic{font-size:40px;display:block;margin-bottom:10px;}
+.hnav-title{font-family:var(--G);font-size:9px;line-height:1.9;margin-bottom:5px;}
+.hnav-sub{font-size:14px;font-weight:700;line-height:1.5;}
+.hn1{background:#071a07;border-color:var(--em) #021002 #021002 var(--em);}.hn1 .hnav-title{color:var(--em);}.hn1 .hnav-sub{color:#88ff88;}
+.hn2{background:#1a1000;border-color:var(--gold) #0a0500 #0a0500 var(--gold);}.hn2 .hnav-title{color:var(--gold);}.hn2 .hnav-sub{color:#eedd90;}
+.hn3{background:#080016;border-color:#aa44cc #1a0830 #1a0830 #aa44cc;}.hn3 .hnav-title{color:#dd88ff;}.hn3 .hnav-sub{color:#cc99ee;}
+.hn4{background:#031410;border-color:var(--dia) #011008 #011008 var(--dia);}.hn4 .hnav-title{color:var(--dia);}.hn4 .hnav-sub{color:#90ddc8;}
+.hn5{background:#0a1a04;border-color:#88cc44 #1a3008 #1a3008 #88cc44;}.hn5 .hnav-title{color:#a8ee60;}.hn5 .hnav-sub{color:#c0ee90;}
+.hn6{background:#100020;border-color:#7755bb #100830 #100830 #7755bb;}.hn6 .hnav-title{color:#bbaaff;}.hn6 .hnav-sub{color:#aa99ee;}
+.hn-wide{grid-column:1/-1;padding:14px;}
+
+/* HEADINGS */
+.h1{font-family:var(--G);font-size:15px;color:var(--gold);text-shadow:3px 3px var(--gdk);text-align:center;margin-bottom:8px;line-height:1.8;}
+.h2{font-family:var(--G);font-size:11px;color:var(--gold);margin-bottom:12px;line-height:1.8;}
+.h3{font-family:var(--G);font-size:9px;color:var(--dia);margin-bottom:8px;line-height:1.8;}
+.h4{font-family:var(--G);font-size:8px;margin-bottom:8px;line-height:1.8;}
+.sub{font-size:16px;color:#aaa;text-align:center;margin-bottom:14px;}
+.body{font-size:16px;line-height:1.8;color:#ddd;font-weight:700;}
+.body b,.body strong{color:#fff;font-weight:900;}
+.tip-body{font-size:16px;line-height:1.8;color:#ccddcc;font-weight:700;}
+
+/* GOALS STRIP */
+.gstrip{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.gchip{border:3px solid;border-radius:3px;padding:10px;display:flex;align-items:center;gap:10px;}
+.gchip-i{font-size:24px;flex-shrink:0;}
+.gchip-l{font-family:var(--G);font-size:7px;line-height:1.9;}
+.gc1{border-color:#3a6a1a;background:#0a1a04;}.gc1 .gchip-l{color:#90dd60;}
+.gc2{border-color:#6a5000;background:#1a1000;}.gc2 .gchip-l{color:var(--gold);}
+.gc3{border-color:#6a3030;background:#1a0808;}.gc3 .gchip-l{color:#ffaaaa;}
+.gc4{border-color:#0a5a50;background:#020e0c;}.gc4 .gchip-l{color:var(--dia);}
+
+/* DATE BAR */
+.datebar{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.darr{font-family:var(--G);font-size:13px;background:var(--panel);border:3px solid;
+  border-color:#6666aa #101022 #101022 #6666aa;color:#fff;width:50px;height:50px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+.darr:active{border-color:#101022 #6666aa #6666aa #101022;}
+.dlbl{flex:1;font-family:var(--G);font-size:9px;color:#fff;text-align:center;line-height:2;}
+
+/* WORD OF DAY */
+.wcard{background:#0a0a28;border:3px solid #4444aa;border-radius:3px;padding:14px 16px;margin-bottom:14px;}
+.wbadge{font-family:var(--G);font-size:7px;color:#9999ee;margin-bottom:8px;}
+.wmain{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.wem{font-size:36px;flex-shrink:0;}
+.wtitle{font-family:var(--G);font-size:14px;color:var(--dia);line-height:1.6;}
+.wdef{font-size:17px;color:#e0e0ff;margin-bottom:8px;line-height:1.7;font-weight:700;}
+.wsay{font-size:15px;font-weight:800;color:#ccddff;background:#060620;border-radius:3px;padding:10px;line-height:1.7;}
+
+/* DAILY REWARD BANNER */
+.drbanner{background:#1a1200;border:3px solid;border-color:#aa8000 #3a2800 #3a2800 #aa8000;
+  padding:14px 16px;margin-bottom:14px;cursor:pointer;border-radius:3px;}
+.drbanner:active{opacity:.85;}
+.drl{font-family:var(--G);font-size:8px;color:#ccaa44;margin-bottom:6px;}
+.drv{font-size:20px;font-weight:900;color:var(--gold);line-height:1.4;}
+.drh{font-size:15px;color:#aa8844;margin-top:5px;font-weight:700;}
+
+/* PERIOD TABS */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;}
+.tab{background:var(--card);border:3px solid;border-color:#3a3a66 #0a0a18 #0a0a18 #3a3a66;
+  color:#8888cc;font-family:var(--G);font-size:7px;padding:11px 4px;cursor:pointer;text-align:center;border-radius:2px;}
+.tab.on{background:#071a07;border-color:var(--em) #021002 #021002 var(--em);color:#88ff88;}
+.tab-p{display:block;font-size:8px;margin-bottom:4px;}
+.tab-t{display:block;font-family:var(--B);font-size:13px;font-weight:800;color:#9999cc;margin-bottom:4px;}
+.tab.on .tab-t{color:var(--dia);}
+.tab-s{display:block;font-size:12px;color:var(--dia);}
+
+/* PERIOD PANEL */
+.pp{background:var(--card);border:3px solid;border-color:var(--blt) var(--bdk) var(--bdk) var(--blt);padding:16px;margin-bottom:14px;border-radius:3px;}
+.pphead{text-align:center;margin-bottom:16px;}
+.pp-t{font-family:var(--G);font-size:12px;color:var(--gold);margin-bottom:6px;}
+.pp-tm{font-size:18px;font-weight:900;color:var(--dia);}
+.pp-x{font-size:14px;color:#9999cc;margin-top:4px;font-weight:700;}
+
+/* STEP BADGES */
+.sb{font-family:var(--G);font-size:8px;text-align:center;padding:10px;border-radius:3px;margin-bottom:14px;line-height:1.8;}
+.sb1{background:#071a07;color:#88ff88;border:2px solid var(--em);}
+.sb2{background:#0a0a22;color:#bbbbff;border:2px solid #5555cc;}
+.sb3{background:#1a1200;color:var(--gold);border:2px solid #aa8800;}
+
+/* REWARD GRID */
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.rbtn{background:#181840;border:3px solid;border-color:#5555aa #0e0e26 #0e0e26 #5555aa;
+  border-radius:3px;padding:14px 10px;text-align:center;cursor:pointer;}
+.rbtn:active{background:#22224a;}
+.ric{font-size:28px;display:block;margin-bottom:7px;}
+.rlb{font-size:16px;font-weight:800;color:#eeeeff;line-height:1.4;}
+
+/* WORKING FOR BADGE */
+.wfb{background:#1a1000;border:3px solid #aa8000;border-radius:3px;
+  padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.wfb-ico{font-size:28px;flex-shrink:0;}
+.wfb-l{font-family:var(--G);font-size:8px;color:#ccaa44;margin-bottom:5px;}
+.wfb-v{font-size:20px;font-weight:900;color:var(--gold);line-height:1.4;}
+
+/* FEELING GRID */
+.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.fbtn{background:#1a1a3a;border:3px solid #4444aa;border-radius:3px;padding:12px 5px;text-align:center;cursor:pointer;}
+.fbtn:active{transform:scale(.93);}
+.fem{font-size:28px;display:block;margin-bottom:5px;}
+.fnm{font-size:14px;font-weight:900;color:#eeeeff;line-height:1.3;}
+
+/* FEELING RESPONSE */
+.fresp{background:#0e0e28;border:2px solid #5555aa;border-radius:3px;padding:14px;margin-bottom:12px;display:none;}
+.fresp.on{display:block;}
+.fr-t{font-family:var(--G);font-size:9px;color:var(--gold);margin-bottom:10px;line-height:1.8;}
+.fr-b{font-size:17px;line-height:1.8;color:#e0e0ff;margin-bottom:10px;font-weight:700;}
+.fr-s{font-size:16px;font-weight:800;color:#fff;background:#080820;border-radius:3px;padding:12px;line-height:1.7;}
+.fr-btn{display:block;width:100%;padding:14px;margin-top:12px;
+  background:#071a07;border:3px solid;border-color:var(--em) #021002 #021002 var(--em);
+  color:#88ff88;font-family:var(--G);font-size:8px;text-align:center;cursor:pointer;line-height:1.8;border-radius:2px;}
+
+/* FEELING BADGE */
+.fbadge{background:#0e0e28;border:2px solid #5555aa;border-radius:3px;
+  padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.fbadge-e{font-size:30px;flex-shrink:0;}
+.fbadge-l{font-family:var(--G);font-size:7px;color:#9999cc;margin-bottom:3px;}
+.fbadge-v{font-size:18px;font-weight:900;color:#fff;}
+.fbadge-c{font-size:14px;color:#9999cc;cursor:pointer;margin-top:4px;text-decoration:underline;}
+
+/* BEHAVIOR BUTTONS */
+.beh{width:100%;background:#141438;border:3px solid;border-color:#5555aa #0e0e26 #0e0e26 #5555aa;
+  border-radius:3px;padding:14px;margin-bottom:10px;cursor:pointer;text-align:left;display:block;}
+.beh:last-child{margin-bottom:0;}
+.beh:active{transform:scale(.98);}
+.beh.on{background:#071a07;border-color:var(--em) #021002 #021002 var(--em);}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.beh.on{animation:pop .2s ease;}
+.beh-top{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.bbar{width:5px;height:50px;flex-shrink:0;border-radius:2px;}
+.bic{font-size:26px;flex-shrink:0;}
+.blb{font-size:17px;font-weight:900;color:#ccccff;flex:1;line-height:1.4;}
+.beh.on .blb{color:#88ff88;}
+.bgem{font-size:26px;flex-shrink:0;}
+.beh-d{font-size:14px;font-weight:700;color:#9999cc;line-height:1.6;padding:8px 10px;background:#0a0a22;border-radius:3px;border-left:3px solid;}
+.beh.on .beh-d{color:#66cc66;background:#041404;border-color:var(--em);}
+
+/* GOAL PREVIEW (locked) */
+.gprv{border:2px solid #3a3a66;border-radius:3px;overflow:hidden;margin-top:14px;}
+.gprv-hd{background:#101028;padding:10px 14px;font-family:var(--G);font-size:7px;color:#7777cc;line-height:1.8;}
+.gprv-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#0c0c26;border-top:1px solid #2a2a4a;opacity:.5;}
+.gprv-bar{width:4px;height:44px;border-radius:2px;flex-shrink:0;}
+.gprv-ic{font-size:22px;flex-shrink:0;}
+.gprv-tx{flex:1;}
+.gprv-lb{font-size:15px;font-weight:800;color:#9999cc;}
+.gprv-ds{font-size:13px;color:#7777aa;margin-top:3px;line-height:1.5;}
+.gprv-gm{font-size:20px;opacity:.2;}
+
+/* REWARD STRIP */
+.rstrip{padding:14px;border:3px solid;border-radius:3px;text-align:center;font-size:18px;font-weight:900;line-height:1.6;margin-top:12px;}
+.rs-lk{background:#0e0c00;border-color:#6a5800 #1a1400 #1a1400 #6a5800;color:#ccaa44;}
+.rs-ul{background:#071a07;border-color:var(--em) #021002 #021002 var(--em);color:#88ff88;}
+
+/* CALM */
+.calm-wrap{display:none;margin-bottom:14px;}
+.calm-wrap.on{display:block;}
+.calmg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.ctool{background:#0e0e2a;border:3px solid;border-color:#4444aa #0a0a20 #0a0a20 #4444aa;
+  border-radius:3px;padding:14px 10px;text-align:center;cursor:pointer;}
+.ctool:active{background:#16163a;}
+.ctool.on{background:#071a07;border-color:var(--em) #021002 #021002 var(--em);}
+.ctool-i{font-size:28px;display:block;margin-bottom:6px;}
+.ctool-l{font-size:16px;font-weight:800;color:#ccccff;}
+.ctool.on .ctool-l{color:#88ff88;}
+.space-wrap{background:#080820;border:3px solid #3333aa;border-radius:3px;padding:14px;}
+.space-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.spbtn{background:#0c0c28;border:3px solid;border-color:#4444aa #0a0a20 #0a0a20 #4444aa;
+  border-radius:3px;padding:14px 8px;text-align:center;cursor:pointer;}
+.spbtn:active{opacity:.8;}
+.spbtn.on{border-color:var(--dia) #003050 #003050 var(--dia);background:#041422;}
+.spbtn.no{opacity:.3;pointer-events:none;border-style:dashed;}
+.spic{font-size:30px;display:block;margin-bottom:6px;}
+.splb{font-size:16px;font-weight:800;color:#ccccff;}
+.spbtn.on .splb{color:var(--dia);}
+.avchk{background:#100c00;border:3px solid #8a7000;border-radius:3px;padding:14px;margin-top:10px;text-align:center;}
+.avq{font-size:17px;font-weight:800;color:#ffee88;margin-bottom:12px;line-height:1.6;}
+.av-row{display:flex;gap:8px;}
+.av-y{flex:1;background:#071a07;border:3px solid var(--em);padding:14px;font-size:16px;font-weight:900;color:#88ff88;cursor:pointer;border-radius:3px;}
+.av-n{flex:1;background:#200a0a;border:3px solid #cc4444;padding:14px;font-size:16px;font-weight:900;color:#ffbbbb;cursor:pointer;border-radius:3px;}
+.spmsg{font-size:16px;font-weight:800;color:var(--dia);text-align:center;margin-top:12px;line-height:1.7;display:none;}
+
+/* SIBLING CHALLENGE & EXTRA SPECIAL */
+.sib-card{background:#080016;border:3px solid #aa44cc;border-radius:3px;padding:16px;margin-bottom:14px;}
+.sib-title{font-family:var(--G);font-size:10px;color:#dd88ff;margin-bottom:8px;line-height:1.8;}
+.sib-ch{font-size:19px;font-weight:900;color:#fff;margin-bottom:10px;line-height:1.6;
+  padding:12px;background:#0e0020;border:2px solid #661188;border-radius:3px;}
+.progress-wrap{margin-bottom:12px;}
+.progress-lbl{font-family:var(--G);font-size:8px;margin-bottom:6px;line-height:1.8;}
+.progress-track{height:16px;border:2px solid;border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;transition:width .4s ease;}
+.progress-count{font-size:15px;font-weight:800;margin-top:5px;}
+.sib-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.sibbtn{background:#180030;border:3px solid #aa44cc;padding:14px;text-align:center;
+  cursor:pointer;font-size:16px;font-weight:900;color:#fff;border-radius:3px;}
+.sibbtn:active{opacity:.8;}
+.sibbtn.on{background:#071a07;border-color:var(--em);color:#88ffaa;}
+.reward-reveal{background:#0a0020;border:2px solid #aa44cc;border-radius:3px;padding:14px;display:none;text-align:center;margin-bottom:10px;}
+.reward-reveal.on{display:block;}
+.rr-title{font-family:var(--G);font-size:10px;margin-bottom:10px;line-height:1.8;}
+.rr-val{font-size:20px;font-weight:900;color:#fff;margin-bottom:8px;line-height:1.5;}
+.rr-sub{font-size:16px;font-weight:700;line-height:1.7;}
+.new-btn{background:#080018;border:2px solid #663388;padding:10px;width:100%;
+  font-family:var(--G);font-size:8px;color:#cc88dd;cursor:pointer;margin-top:10px;line-height:1.8;border-radius:2px;}
+
+.es-card{background:#0c0008;border:3px solid #8833aa;border-radius:3px;padding:16px;margin-bottom:14px;}
+.es-title{font-family:var(--G);font-size:9px;color:#cc88ff;margin-bottom:8px;line-height:1.8;}
+.es-sub{font-size:16px;color:#aa88cc;margin-bottom:14px;line-height:1.7;font-weight:700;}
+.es-add-btn{width:100%;background:#160028;border:3px solid;border-color:#8833aa #1a0840 #1a0840 #8833aa;
+  padding:16px;font-family:var(--G);font-size:8px;color:#cc88ff;cursor:pointer;border-radius:3px;line-height:1.8;}
+.es-add-btn:active{opacity:.8;}
+
+/* SUMMARY */
+.sumrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.sum-cell{background:var(--card);border:3px solid;border-color:#4444aa #0a0a22 #0a0a22 #4444aa;
+  border-radius:3px;padding:12px 6px;text-align:center;}
+.sum-cell.on{background:#071a07;border-color:var(--em) #021002 #021002 var(--em);}
+.sum-n{font-family:var(--G);font-size:7px;color:#8888cc;margin-bottom:5px;}
+.sum-g{font-size:22px;margin-bottom:4px;}
+.sum-s{font-size:14px;font-weight:800;color:#7777aa;}
+.sum-cell.on .sum-s{color:var(--em);}
+
+/* XP BAR */
+.xpw{margin-bottom:12px;}
+.xpl{font-family:var(--G);font-size:8px;color:#8888cc;margin-bottom:6px;}
+.xpt-track{height:26px;background:#060614;border:3px solid;border-color:#1a1a1a #606080 #606080 #1a1a1a;position:relative;overflow:hidden;border-radius:2px;}
+.xpf{height:100%;background:var(--em);transition:width .4s ease;}
+.xpt-txt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--G);font-size:9px;color:#fff;text-shadow:1px 1px #000;white-space:nowrap;}
+
+/* DAY TOTAL */
+.daytot{background:var(--card);border:3px solid;border-color:var(--blt) var(--bdk) var(--bdk) var(--blt);
+  padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;border-radius:3px;}
+.dt-l{font-family:var(--G);font-size:8px;color:#9999cc;}
+.dt-r{text-align:right;}
+.dt-v{font-family:var(--G);font-size:14px;color:var(--dia);}
+.dt-u{font-size:16px;font-weight:900;color:var(--gold);display:none;margin-top:5px;}
+
+/* WEEKLY */
+.weekly{background:#101028;border:3px solid #5555aa;border-radius:3px;padding:14px;margin-bottom:14px;}
+.wk-l{font-family:var(--G);font-size:9px;color:#aaaaff;margin-bottom:10px;line-height:1.8;}
+.wk-bar{height:16px;background:#0a0a20;border:2px solid #4444aa;overflow:hidden;margin-bottom:8px;border-radius:3px;}
+.wk-fill{height:100%;background:#5555bb;}
+.wk-txt{font-size:15px;font-weight:800;color:#aaaadd;text-align:center;margin-bottom:12px;}
+.wk-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.wk-i{background:#0e0e28;border:2px solid #4444aa;border-radius:3px;padding:12px 8px;display:flex;align-items:center;gap:8px;opacity:.6;}
+.wk-ic{font-size:22px;flex-shrink:0;}
+.wk-lb{font-size:15px;font-weight:800;color:#aaaadd;}
+
+/* MASTERY */
+.mastery-wrap{background:#0e0e28;border:3px solid #5555aa;border-radius:3px;padding:16px;margin-bottom:14px;}
+.mastery-t{font-family:var(--G);font-size:9px;color:#aaaaff;margin-bottom:6px;line-height:1.8;}
+.mastery-sub{font-size:15px;font-weight:700;color:#aaaadd;margin-bottom:16px;line-height:1.7;}
+.mrow{margin-bottom:12px;}
+.mrow:last-child{margin-bottom:0;}
+.mrow-lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.mrow-n{font-size:15px;font-weight:800;color:#ccccff;}
+.mrow-p{font-family:var(--G);font-size:8px;color:var(--dia);}
+.mrow-track{height:14px;background:#0e0e28;border:2px solid #3a3a66;border-radius:3px;overflow:hidden;}
+.mrow-fill{height:100%;border-radius:3px;transition:width .5s ease;}
+.mrow-done{font-family:var(--G);font-size:7px;color:var(--gold);margin-top:4px;line-height:1.8;}
+
+/* INTRO GOAL CARDS */
+.step-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;}
+.step-n{font-family:var(--G);font-size:10px;background:var(--gold);color:#3a2a00;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:3px solid var(--gdk);}
+.step-t{font-size:17px;line-height:1.7;color:#e0e0ff;flex:1;font-weight:700;}
+.step-t b{color:#fff;font-weight:900;}
+.gc-card{border:3px solid;border-radius:3px;margin-bottom:14px;overflow:hidden;}
+.gc-hd{display:flex;align-items:center;gap:14px;padding:14px 16px;}
+.gc-ic{font-size:34px;flex-shrink:0;}
+.gc-nm{font-family:var(--G);font-size:9px;line-height:1.9;margin-bottom:4px;}
+.gc-tg{font-size:16px;font-weight:800;line-height:1.5;}
+.gc-bd{padding:14px 16px;border-top:2px solid;}
+.gc-wh{font-family:var(--G);font-size:7px;letter-spacing:.06em;margin-bottom:7px;}
+.gc-tx{font-size:16px;line-height:1.8;margin-bottom:12px;font-weight:700;}
+.gc-ex{border:2px solid;border-radius:3px;padding:12px;}
+.gc-xl{font-family:var(--G);font-size:7px;letter-spacing:.06em;margin-bottom:7px;}
+.gc-xt{font-size:16px;line-height:1.8;font-weight:700;}
+.G1{border-color:#3a6a1a;}.G1 .gc-hd{background:#0e2008;}.G1 .gc-nm{color:#90dd60;}.G1 .gc-tg{color:#b0ee80;}
+.G1 .gc-bd{background:#0a1606;border-top-color:#2a4a10;}.G1 .gc-wh{color:#70cc40;}.G1 .gc-tx{color:#c0dd90;}
+.G1 .gc-ex{border-color:#2a5010;background:#081206;}.G1 .gc-xl{color:#90dd60;}.G1 .gc-xt{color:#d0eea8;}
+.G2{border-color:#6a5000;}.G2 .gc-hd{background:#1e1400;}.G2 .gc-nm{color:var(--gold);}.G2 .gc-tg{color:#eebb40;}
+.G2 .gc-bd{background:#120c00;border-top-color:#4a3800;}.G2 .gc-wh{color:var(--gold);}.G2 .gc-tx{color:#ddcc70;}
+.G2 .gc-ex{border-color:#5a4000;background:#0e0a00;}.G2 .gc-xl{color:var(--gold);}.G2 .gc-xt{color:#eedf90;}
+.G3{border-color:#6a3030;}.G3 .gc-hd{background:#1e0a0a;}.G3 .gc-nm{color:#ffaaaa;}.G3 .gc-tg{color:#ee8888;}
+.G3 .gc-bd{background:#120606;border-top-color:#4a2020;}.G3 .gc-wh{color:#ffaaaa;}.G3 .gc-tx{color:#ddaaaa;}
+.G3 .gc-ex{border-color:#5a2a2a;background:#0e0606;}.G3 .gc-xl{color:#ffaaaa;}.G3 .gc-xt{color:#eecccc;}
+.G4{border-color:#0a5a50;}.G4 .gc-hd{background:#031e1a;}.G4 .gc-nm{color:var(--dia);}.G4 .gc-tg{color:#50ddbb;}
+.G4 .gc-bd{background:#021210;border-top-color:#0a4040;}.G4 .gc-wh{color:var(--dia);}.G4 .gc-tx{color:#90ccbb;}
+.G4 .gc-ex{border-color:#0a4a40;background:#010c0a;}.G4 .gc-xl{color:var(--dia);}.G4 .gc-xt{color:#b0e0d0;}
+
+/* SKILLS */
+.skill{background:var(--card);border:3px solid;border-color:#5555aa #0e0e2a #0e0e2a #5555aa;border-radius:3px;padding:16px;margin-bottom:12px;}
+.skill-hd{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+.skill-ic{font-size:36px;flex-shrink:0;}
+.skill-nm{font-family:var(--G);font-size:10px;color:var(--dia);line-height:1.8;}
+.skill-ds{font-size:17px;line-height:1.8;color:#e0e0ff;margin-bottom:12px;font-weight:700;}
+.skill-hw{background:#0a0a28;border-radius:3px;padding:12px;}
+.skill-hl{font-family:var(--G);font-size:7px;color:#7777cc;margin-bottom:6px;}
+.skill-ht{font-size:16px;font-weight:800;color:#aaaaff;line-height:1.7;}
+.skill-pr{display:block;width:100%;padding:12px;margin-top:12px;
+  background:#080820;border:3px solid;border-color:#6666bb #0e0e30 #0e0e30 #6666bb;
+  color:var(--dia);font-family:var(--G);font-size:8px;text-align:center;cursor:pointer;line-height:1.8;border-radius:2px;}
+
+/* SHARE */
+.shrpt{background:#0e0e28;border:2px solid #4444aa;border-radius:3px;padding:16px;margin-bottom:14px;
+  font-size:15px;line-height:1.9;color:#e0e0ff;white-space:pre-wrap;word-break:break-word;
+  max-height:50vh;overflow-y:auto;font-weight:700;}
+.sh-btn{display:block;width:100%;padding:16px;border-radius:3px;font-size:17px;font-weight:900;
+  text-align:center;cursor:pointer;margin-bottom:10px;border:3px solid;}
+.sh-btn:active{opacity:.8;}
+.sh-gm{background:#140608;border-color:#cc3333 #440000 #440000 #cc3333;color:#ffaaaa;}
+.sh-cp{background:#060e1e;border-color:#3355cc #001040 #001040 #3355cc;color:#aabbff;}
+
+/* SETTINGS - collapsible */
+details{margin-bottom:10px;}
+details>summary{
+  background:#0e0e28;border:2px solid #4444aa;border-radius:3px;
+  padding:14px 16px;cursor:pointer;list-style:none;
+  font-family:var(--G);font-size:9px;color:var(--dia);line-height:1.8;
+  display:flex;align-items:center;justify-content:space-between;
+}
+details>summary::-webkit-details-marker{display:none;}
+details>summary::after{content:'▼';font-size:10px;color:#5555aa;}
+details[open]>summary::after{content:'▲';}
+details[open]>summary{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom-color:#222244;}
+.set-body{background:#0c0c24;border:2px solid #4444aa;border-top:none;border-radius:0 0 3px 3px;padding:16px;}
+.set-lbl{font-family:var(--G);font-size:8px;color:#aaaadd;margin-bottom:6px;margin-top:14px;line-height:1.8;display:block;}
+.set-lbl:first-child{margin-top:0;}
+.set-inp{background:#0a0a22;border:2px solid #4444aa;border-radius:3px;
+  padding:13px;color:#fff;font-family:var(--B);font-size:16px;font-weight:700;width:100%;outline:none;}
+.set-inp:focus{border-color:var(--dia);}
+.set-sel{background:#0a0a22;border:2px solid #4444aa;border-radius:3px;
+  padding:13px;color:#fff;font-family:var(--B);font-size:16px;font-weight:700;width:100%;outline:none;cursor:pointer;}
+.set-sel:focus{border-color:var(--dia);}
+.set-ta{background:#0a0a22;border:2px solid #4444aa;border-radius:3px;
+  padding:12px;color:#fff;font-family:var(--B);font-size:15px;font-weight:700;width:100%;outline:none;
+  min-height:100px;resize:vertical;line-height:1.7;}
+.set-ta:focus{border-color:var(--dia);}
+.set-hint{font-size:14px;color:#7777aa;margin-top:5px;line-height:1.6;font-weight:700;}
+.set-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* RESOURCES / PRINT */
+.resource-card{background:#0a1a04;border:3px solid #3a6a1a;border-radius:3px;padding:16px;margin-bottom:14px;}
+.resource-title{font-family:var(--G);font-size:9px;color:#90dd60;margin-bottom:6px;line-height:1.8;}
+.resource-desc{font-size:16px;font-weight:700;color:#b0cc80;margin-bottom:12px;line-height:1.7;}
+.print-btn{background:#0a2008;border:3px solid #3a8a1a;border-radius:3px;padding:12px;
+  width:100%;font-family:var(--G);font-size:8px;color:#88dd44;cursor:pointer;line-height:1.8;text-align:center;}
+.print-btn:active{opacity:.8;}
+
+
+
+/* POPUP */
+.popup-ov{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.88);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.popup-ov.on{display:flex;}
+.popup-box{background:#0e0e2a;border:4px solid var(--dia);border-radius:4px;padding:20px;max-width:500px;width:100%;}
+.pop-badge{font-family:var(--G);font-size:8px;color:#88ffff;margin-bottom:12px;line-height:1.8;text-align:center;}
+.pop-title{font-family:var(--G);font-size:13px;color:var(--gold);margin-bottom:14px;text-align:center;line-height:1.8;}
+.pop-body{font-size:17px;font-weight:700;color:#e0e0ff;line-height:1.8;margin-bottom:12px;}
+.pop-note{font-size:14px;color:#9999cc;margin-bottom:16px;line-height:1.7;font-style:italic;}
+.pop-close{display:block;width:100%;padding:14px;background:#071a07;border:3px solid var(--em);
+  color:#88ff88;font-family:var(--G);font-size:9px;text-align:center;cursor:pointer;border-radius:3px;line-height:1.8;}
+
+/* DAILY PICKER */
+.pk-g{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.pk-btn{background:#141440;border:3px solid;border-color:#5555aa #0e0e26 #0e0e26 #5555aa;
+  border-radius:3px;padding:14px 10px;text-align:center;cursor:pointer;}
+.pk-btn:active{background:#1e1e50;}
+.pk-btn.fam{background:#160830;border-color:#8833aa #1a0840 #1a0840 #8833aa;}
+.pk-ic{font-size:28px;display:block;margin-bottom:7px;}
+.pk-lb{font-size:16px;font-weight:800;color:#eeeeff;line-height:1.4;}
+.pk-fam{font-size:13px;color:#cc88ff;font-weight:700;display:block;margin-top:4px;}
+
+/* FOOTER */
+.foot{text-align:center;padding:24px 16px;margin-top:20px;border-top:2px solid #3a3a66;}
+.foot-n{font-family:var(--G);font-size:8px;color:#7a8fa0;margin-bottom:4px;line-height:1.9;}
+.foot-c{font-size:13px;color:#7a8fa0;line-height:1.8;font-weight:700;}
+
+/* RESPONSIVE */
+@media(max-width:400px){
+  .fg{grid-template-columns:repeat(3,1fr);}
+  .gstrip{grid-template-columns:1fr 1fr;}
+  .nav-logo{font-size:11px;}
+  .wk-g{grid-template-columns:1fr;}
+  .home-grid{grid-template-columns:1fr 1fr;}
+}
+@media(min-width:480px){
+  .gstrip{grid-template-columns:repeat(4,1fr);}
+}
+@media(min-width:600px){
+  .pg{padding:24px 24px 100px;}
+  .fg{grid-template-columns:repeat(6,1fr);}
+  .h1{font-size:18px;}
+  .nav-logo{font-size:15px;}
+  .home-grid{grid-template-columns:1fr 1fr 1fr;}
+}
+
+/* EMOJI PICKER */
+.ep-wrap{margin-top:8px;background:#080820;border:2px solid #3a3a66;border-radius:3px;padding:10px;}
+.ep-lbl{font-family:var(--G);font-size:7px;color:#7777cc;margin-bottom:8px;line-height:1.8;}
+.ep-grid{display:flex;flex-wrap:wrap;gap:6px;}
+.ep-btn{font-size:22px;cursor:pointer;padding:4px 6px;border-radius:3px;background:#0e0e28;border:1px solid #2a2a55;line-height:1;}
+.ep-btn:active{background:#1a1a40;transform:scale(.92);}
+.ep-hint{font-size:13px;font-weight:700;color:#6666aa;margin-top:6px;}
+
+/* LANDING / START PAGE */
+.start-wrap{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.start-logo{font-family:var(--G);font-size:20px;color:var(--gold);text-shadow:3px 3px var(--gdk);text-align:center;margin-bottom:8px;line-height:1.8;}
+.start-sub{font-size:17px;font-weight:700;color:#aaa;text-align:center;margin-bottom:32px;}
+.start-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:500px;}
+.start-card{border:4px solid;border-radius:4px;padding:28px 20px;cursor:pointer;text-align:center;}
+.start-card:active{transform:scale(.96);}
+.sc-home{background:#071a07;border-color:var(--em) #021002 #021002 var(--em);}
+.sc-sch{background:#06101a;border-color:var(--dia) #011020 #011020 var(--dia);}
+.sc-ic{font-size:52px;display:block;margin-bottom:12px;}
+.sc-title{font-family:var(--G);font-size:11px;line-height:1.9;margin-bottom:6px;}
+.sc-home .sc-title{color:var(--em);}
+.sc-sch .sc-title{color:var(--dia);}
+.sc-desc{font-size:15px;font-weight:700;line-height:1.5;}
+.sc-home .sc-desc{color:#88ee88;}
+.sc-sch .sc-desc{color:#88ccff;}
+.start-note{font-size:14px;font-weight:700;color:#5555aa;text-align:center;margin-top:20px;max-width:400px;line-height:1.7;}
+.sched-strip{background:#06101a;border:3px solid #2255aa;border-radius:3px;padding:14px;margin-bottom:14px;}
+.sched-title{font-family:var(--G);font-size:8px;color:#88aaff;margin-bottom:10px;line-height:1.8;}
+.sched-item{display:flex;align-items:center;gap:10px;padding:5px 8px;border-radius:2px;}
+.sched-item.now{background:#0e1a28;border-left:3px solid var(--dia);}
+.sched-time{font-family:var(--G);font-size:7px;color:#6688aa;white-space:nowrap;min-width:80px;}
+.sched-item.now .sched-time{color:var(--dia);}
+.sched-name{font-size:14px;font-weight:700;color:#99bbdd;}
+.sched-item.now .sched-name{color:#fff;font-size:15px;}
+.school-badge{font-family:var(--G);font-size:7px;background:#06101a;color:var(--dia);border:2px solid var(--dia);border-radius:2px;padding:3px 8px;margin-left:6px;}
+.tab.sch-on{background:#06101a;border-color:var(--dia) #011020 #011020 var(--dia);color:var(--dia);}
+.tab.sch-on .tab-t{color:#88ccff;}
+
+/* SCHOOL CHART - COMPACT TEACHER DESIGN */
+.sch-consistency{background:#100a00;border:2px solid #8a6800;border-radius:3px;padding:12px 14px;margin-bottom:14px;}
+.sch-con-title{font-family:var(--G);font-size:8px;color:#ccaa44;margin-bottom:6px;line-height:1.8;}
+.sch-con-body{font-size:14px;font-weight:700;color:#e0cc88;line-height:1.7;}
+.sch-classes{background:#060e18;border:2px solid #2244aa;border-radius:3px;padding:10px 12px;margin-bottom:12px;}
+.sch-cls-title{font-family:var(--G);font-size:7px;color:#6688bb;margin-bottom:7px;}
+.sch-cls-list{display:flex;flex-wrap:wrap;gap:5px;}
+.sch-cls-item{font-size:12px;font-weight:700;color:#99bbdd;background:#0a1422;border:1px solid #2244aa;border-radius:2px;padding:3px 8px;}
+.sch-cls-item.now{color:var(--dia);border-color:var(--dia);background:#041422;}
+.sch-teacher{margin-bottom:12px;}
+.sch-teacher-lbl{font-family:var(--G);font-size:7px;color:#8899bb;margin-bottom:5px;}
+.sch-teacher-inp{background:#060e18;border:2px solid #2244aa;border-radius:2px;padding:10px 12px;color:#fff;font-family:var(--B);font-size:15px;font-weight:700;width:100%;outline:none;}
+.sch-teacher-inp:focus{border-color:var(--dia);}
+.sch-diamonds-compact{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.scd-btn{background:#0a1020;border:2px solid #2244aa;border-radius:3px;padding:10px 8px;cursor:pointer;display:flex;align-items:center;gap:8px;text-align:left;}
+.scd-btn:active{transform:scale(.97);}
+.scd-btn.on{background:#041404;border-color:var(--em);}
+@keyframes spop{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.scd-btn.on{animation:spop .15s ease;}
+.scd-bar{width:3px;height:36px;border-radius:2px;flex-shrink:0;}
+.scd-ic{font-size:18px;flex-shrink:0;}
+.scd-lbl{font-size:12px;font-weight:800;color:#9999cc;flex:1;line-height:1.3;}
+.scd-btn.on .scd-lbl{color:#88ee88;}
+.scd-gem{font-size:16px;flex-shrink:0;}
+.sch-notes{margin-bottom:12px;}
+.sch-notes-lbl{font-family:var(--G);font-size:7px;color:#8899bb;margin-bottom:5px;}
+.sch-notes-ta{background:#060e18;border:2px solid #2244aa;border-radius:2px;padding:10px 12px;color:#e0e0ff;font-family:var(--B);font-size:14px;font-weight:700;width:100%;outline:none;min-height:70px;resize:vertical;line-height:1.6;}
+.sch-notes-ta:focus{border-color:var(--dia);}
+.sch-notes-ta::placeholder{color:#445566;}
+.sch-rstrip{padding:10px 12px;border:2px solid;border-radius:3px;text-align:center;font-size:15px;font-weight:900;line-height:1.5;margin-bottom:10px;}
+.sch-rs-lk{background:#0e0c00;border-color:#5a4800;color:#ccaa44;}
+.sch-rs-ul{background:#041404;border-color:var(--em);color:#88ee88;}
+.sch-reward-btn{background:#0a1a0a;border:2px solid #2a5a1a;border-radius:3px;padding:12px;text-align:center;cursor:pointer;margin-bottom:10px;}
+.sch-reward-btn:active{opacity:.8;}
+.sch-reward-lbl{font-family:var(--G);font-size:7px;color:#6a9a4a;margin-bottom:4px;}
+.sch-reward-val{font-size:14px;font-weight:800;color:#aadd88;line-height:1.4;}
+.sch-step-badge{font-family:var(--G);font-size:7px;text-align:center;padding:7px 10px;border-radius:2px;margin-bottom:10px;line-height:1.8;}
+.sch-sb1{background:#071a07;color:#88ee88;border:2px solid var(--em);}
+.sch-sb2{background:#0a0a22;color:#aaaaff;border:2px solid #4444aa;}
+.sch-sb3{background:#1a1200;color:var(--gold);border:2px solid #8a6800;}
+</style>
+</head>
+<body>
+
+<!-- COPING POPUP -->
+<div class="popup-ov" id="cop-ov">
+  <div class="popup-box">
+    <div class="pop-badge">🎲 DAILY COPING PRACTICE - Do this with an adult right now!</div>
+    <div class="pop-title" id="cop-title"></div>
+    <div class="pop-body" id="cop-body"></div>
+    <div class="pop-note">This is a skill-building practice - no reward needed. Just practicing together makes you stronger! Close when done.</div>
+    <button class="pop-close" onclick="closeCoping()">✓ We practiced together! Close</button>
+  </div>
+</div>
+
+<!-- PAGE: HOME HUB (DEFAULT)           -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-home">
+  <div style="text-align:center;padding:20px 0 16px;">
+    <div style="font-family:var(--G);font-size:18px;color:var(--gold);text-shadow:3px 3px var(--gdk);margin-bottom:6px;line-height:1.8;">⛏ HERO CHART ⛏</div>
+    <div style="font-size:17px;font-weight:700;color:#aaa;">Where would you like to go?</div>
+  </div>
+
+  <div class="home-grid">
+    <div class="hnav hn1" onclick="go('pg-chart')">
+      <span class="hnav-ic">⛏</span>
+      <div class="hnav-title">TODAY'S CHART</div>
+      <div class="hnav-sub">Earn diamonds &amp; rewards</div>
+    </div>
+    <div class="hnav hn2" onclick="go('pg-rules')">
+      <span class="hnav-ic">📖</span>
+      <div class="hnav-title">RULES &amp; GOALS</div>
+      <div class="hnav-sub">How the game works</div>
+    </div>
+    <div class="hnav hn3" onclick="go('pg-sibling')">
+      <span class="hnav-ic">👫</span>
+      <div class="hnav-title">TOGETHER TIME</div>
+      <div class="hnav-sub">Teamwork &amp; special moments</div>
+    </div>
+    <div class="hnav hn4" onclick="go('pg-parent')">
+      <span class="hnav-ic">👩</span>
+      <div class="hnav-title">PARENT CORNER</div>
+      <div class="hnav-sub">Progress, tips &amp; support</div>
+    </div>
+    <div class="hnav hn5" onclick="go('pg-resources')">
+      <span class="hnav-ic">📚</span>
+      <div class="hnav-title">RESOURCES</div>
+      <div class="hnav-sub">Printable tools &amp; sheets</div>
+    </div>
+    <div class="hnav hn6" onclick="go('pg-sets')">
+      <span class="hnav-ic">⚙</span>
+      <div class="hnav-title">SETTINGS</div>
+      <div class="hnav-sub">Customize everything</div>
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;">
+    <div style="font-family:var(--G);font-size:8px;color:#7777aa;margin-bottom:8px;line-height:1.8;">QUICK ACTIONS</div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-go" onclick="go('pg-share')" style="padding:12px 16px;font-size:9px;">📬 Share My Day</button>
+      <button class="btn btn-di" onclick="go('pg-train')" style="padding:12px 16px;font-size:9px;">🏆 Hero Training</button>
+      <button class="btn" onclick="showCoping()" style="padding:12px 16px;font-size:9px;color:#ffccff;background:#160028;border-color:#8833aa #1a0840 #1a0840 #8833aa;">🎲 Coping Practice</button>
+      <button class="btn" onclick="go('pg-start')" style="padding:12px 16px;font-size:9px;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);">🏫 Switch to School</button>
+    </div>
+  </div>
+
+  <div class="card" style="background:#100a00;border-color:#8a6800 #2a1a00 #2a1a00 #8a6800;">
+    <div style="font-family:var(--G);font-size:8px;color:#ccaa44;margin-bottom:10px;line-height:1.8;">PLEASE NOTE</div>
+    <div style="font-size:16px;font-weight:700;color:#e0cc88;line-height:1.8;margin-bottom:10px;">This tool is meant to support consistency and structure at home. It works best as a <strong style="color:#fff;">complement to</strong> guidance from your child's therapist, school team, or pediatrician - not a replacement for it.</div>
+    <div style="font-size:15px;font-weight:700;color:#ccbb66;line-height:1.7;">If your child is working with a specialist, share this tool with them. A professional who knows your child can help you understand what drives the behavior and adjust this system to fit your child's specific needs.</div>
+  </div>
+
+  <div class="foot">
+    <div class="foot-n">Sedrick Scott, M.S., Applied Behavioral Analysis</div>
+    <div class="foot-c">Using a trauma-informed, behavior-focused approach to support families</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: CHART                        -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-chart">
+  <div class="nav">
+    <div class="nav-logo">⛏ HERO CHART</div>
+    <div class="nav-r">
+      <button class="btn" onclick="home()">🏠</button>
+      <button class="btn btn-go" onclick="go('pg-share')">📬</button>
+      <button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);">🏫 School</button>
+    </div>
+  </div>
+  <div class="gstrip">
+    <div class="gchip gc1"><span class="gchip-i">👂</span><span class="gchip-l">LISTENING &amp;<br>DIRECTIONS</span></div>
+    <div class="gchip gc2"><span class="gchip-i">🦺</span><span class="gchip-l">STAYING<br>SAFE</span></div>
+    <div class="gchip gc3"><span class="gchip-i">🤲</span><span class="gchip-l">GENTLE<br>HANDS</span></div>
+    <div class="gchip gc4"><span class="gchip-i">🧘</span><span class="gchip-l">CALM-DOWN<br>TOOLS</span></div>
+  </div>
+  <div class="datebar">
+    <button class="darr" onclick="changeDay(-1)">◀</button>
+    <div class="dlbl" id="dlbl">TODAY</div>
+    <button class="darr" onclick="changeDay(1)">▶</button>
+  </div>
+  <div class="wcard">
+    <div class="wbadge">📚 WORD OF THE DAY</div>
+    <div class="wmain"><span class="wem" id="w-em"></span><div class="wtitle" id="w-wd"></div></div>
+    <div class="wdef" id="w-df"></div>
+    <div class="wsay" id="w-sy"></div>
+  </div>
+  <div class="drbanner" onclick="pickDaily()">
+    <div class="drl">🏆 TODAY'S BIG GOAL</div>
+    <div class="drv" id="dr-val">Tap to pick your daily reward!</div>
+    <div class="drh" id="dr-hint">Earn 10+ diamonds to unlock it</div>
+  </div>
+  <div class="tabs">
+    <button class="tab on" id="tab0" onclick="setTab(0)"><span class="tab-p">🌅 Morning</span><span class="tab-t">6:30–8:30 AM</span><span class="tab-s" id="ts0">0/4 💎</span></button>
+    <button class="tab" id="tab1" onclick="setTab(1)"><span class="tab-p">☀️ Midday</span><span class="tab-t">3:00–5:30 PM</span><span class="tab-s" id="ts1">0/4 💎</span></button>
+    <button class="tab" id="tab2" onclick="setTab(2)"><span class="tab-p">🌙 Evening</span><span class="tab-t">5:30–8:30 PM</span><span class="tab-s" id="ts2">0/4 💎</span></button>
+  </div>
+  <div class="pp" id="pp"></div>
+  <div class="calm-wrap" id="calm-wrap">
+    <div class="card">
+      <div class="h3" style="margin-top:0;">🧘 CALM-DOWN TOOLS</div>
+      <div class="calmg">
+        <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🌬️</span><span class="ctool-l">Dragon Breaths</span></div>
+        <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🤗</span><span class="ctool-l">Ask for a hug</span></div>
+        <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🦘</span><span class="ctool-l">Jump 10 times</span></div>
+        <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🧸</span><span class="ctool-l">Squeeze something</span></div>
+        <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">💧</span><span class="ctool-l">Get some water</span></div>
+        <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🗣️</span><span class="ctool-l">Use my words</span></div>
+      </div>
+      <div class="space-wrap">
+        <div class="h3" style="margin-bottom:6px;">🏠 MY CALM-DOWN SPACE</div>
+        <div class="body" style="margin-bottom:12px;font-size:15px;">Pick one - we'll check if it's free!</div>
+        <div class="space-g">
+          <div class="spbtn" data-sp="My room 🛏️" onclick="trySpace(this)"><span class="spic">🛏️</span><span class="splb">My room</span></div>
+          <div class="spbtn" data-sp="Cozy corner 🛋️" onclick="trySpace(this)"><span class="spic">🛋️</span><span class="splb">Cozy corner</span></div>
+          <div class="spbtn" data-sp="Pillow fort 🏰" onclick="trySpace(this)"><span class="spic">🏰</span><span class="splb">Pillow fort</span></div>
+          <div class="spbtn" data-sp="Outside 🌳" onclick="trySpace(this)"><span class="spic">🌳</span><span class="splb">Outside</span></div>
+        </div>
+        <div class="avchk" id="avchk" style="display:none;"><div class="avq" id="avq"></div><div class="av-row"><button class="av-y" onclick="spYes()">Yes, it's free! ✓</button><button class="av-n" onclick="spNo()">Not free - try another</button></div></div>
+        <div class="spmsg" id="spmsg"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sumrow" id="sumrow"></div>
+  <div class="xpw"><div class="xpl">DAILY XP BAR</div><div class="xpt-track"><div class="xpf" id="xpf" style="width:0%"></div><div class="xpt-txt" id="xpt-txt">0/12 XP</div></div></div>
+  <div class="daytot"><div class="dt-l">TOTAL DIAMONDS TODAY</div><div class="dt-r"><div class="dt-v" id="dt-v">0/12 💎</div><div class="dt-u" id="dt-u">🏆 Daily reward unlocked!</div></div></div>
+  <div class="weekly">
+    <div class="wk-l">🔒 WEEKLY REWARD - KEEP LEVELING UP!</div>
+    <div class="wk-bar"><div class="wk-fill" id="wk-fill" style="width:0%"></div></div>
+    <div class="wk-txt" id="wk-txt">Earn 50 diamonds this week to unlock · 0/50</div>
+    <div class="wk-g">
+      <div class="wk-i"><span class="wk-ic">🎡</span><span class="wk-lb">Special trip - you pick!</span></div>
+      <div class="wk-i"><span class="wk-ic">🎮</span><span class="wk-lb">New small toy or game</span></div>
+      <div class="wk-i"><span class="wk-ic">🍕</span><span class="wk-lb">Pizza night!</span></div>
+      <div class="wk-i"><span class="wk-ic">👫</span><span class="wk-lb">Family fun day!</span></div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+    <button class="btn" onclick="resetDay()" style="padding:14px;font-size:8px;color:#ffaaaa;background:#180606;border-color:#aa3333 #300000 #300000 #aa3333;line-height:1.8;">↺ Reset Today</button>
+    <button class="btn btn-go" onclick="go('pg-share')" style="padding:14px;font-size:8px;line-height:1.8;">📬 Share My Day</button>
+  </div>
+  <div style="text-align:center;"><button class="btn" onclick="home()" style="padding:12px 20px;font-size:9px;">🏠 Home</button></div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: RULES                        -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-rules">
+  <div class="nav"><div class="nav-logo">📖 RULES &amp; GOALS</div><button class="btn" onclick="sMode==='school'?go('pg-school'):home()">🏠 Back</button>
+    <button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);">🏫 School</button></div>
+  <div class="h1">⛏ MY HERO CHART ⛏</div>
+  <div class="sub">Level up by being your best self every day!</div>
+  <div class="card">
+    <div class="h2">📖 HOW TO PLAY</div>
+    <div class="step-row"><div class="step-n">1</div><div class="step-t">Every day has <b>3 levels</b>: Morning, Midday &amp; Evening.</div></div>
+    <div class="step-row"><div class="step-n">2</div><div class="step-t"><b>Pick your reward first</b> - that's what you're working for!</div></div>
+    <div class="step-row"><div class="step-n">3</div><div class="step-t"><b>Check in on your feelings.</b> All feelings are okay! 💛</div></div>
+    <div class="step-row"><div class="step-n">4</div><div class="step-t">Earn <b>3 out of 4 diamonds</b> → your reward unlocks right away! 🎁</div></div>
+    <div class="step-row"><div class="step-n">5</div><div class="step-t">Earn <b>10+ diamonds in a day</b> → unlock your big daily reward! 🏆</div></div>
+    <div class="step-row"><div class="step-n">6</div><div class="step-t">Complete the <b>Sibling Challenge together</b> → you BOTH win! 👫</div></div>
+    <div class="step-row"><div class="step-n">7</div><div class="step-t">When a parent sees an <b>Extra Special moment</b> - rewards build up over time! ⭐</div></div>
+  </div>
+  <div class="card" style="padding-bottom:8px;"><div class="h2">⭐ THE 4 HERO GOALS</div></div>
+  <div class="gc-card G1"><div class="gc-hd"><span class="gc-ic">👂</span><div><div class="gc-nm">LISTENING &amp; FOLLOWING DIRECTIONS</div><div class="gc-tg">When a grown-up asks, you give it a try!</div></div></div><div class="gc-bd"><div class="gc-wh">WHAT THIS MEANS:</div><div class="gc-tx">When mom, dad, or a teacher asks you to do something, you stop and give it a try. Heroes are great listeners - and it is <b>always okay to ask "why?" or ask for help!</b></div><div class="gc-ex"><div class="gc-xl">💎 HERO MOMENT:</div><div class="gc-xt">Mom says "time to turn off Minecraft." You take a breath, say "okay!" and turn it off. Diamond earned! 💎</div></div></div></div>
+  <div class="gc-card G2"><div class="gc-hd"><span class="gc-ic">🦺</span><div><div class="gc-nm">STAYING SAFE &amp; CLOSE BY</div><div class="gc-tg">Your body stays where grown-ups can see you!</div></div></div><div class="gc-bd"><div class="gc-wh">WHAT THIS MEANS:</div><div class="gc-tx">You stay in safe places where your grown-up can always see you. Heroes are curious AND they always ask before they explore. <b>Always ask first!</b></div><div class="gc-ex"><div class="gc-xl">💎 HERO MOMENT:</div><div class="gc-xt">You tap mom's arm and ask "Can I go over there?" You asked first! Diamond earned! 💎</div></div></div></div>
+  <div class="gc-card G3"><div class="gc-hd"><span class="gc-ic">🤲</span><div><div class="gc-nm">GENTLE HANDS &amp; KIND BODY</div><div class="gc-tg">Our body is for helping, hugging, and playing!</div></div></div><div class="gc-bd"><div class="gc-wh">WHAT THIS MEANS:</div><div class="gc-tx">Our strong body is made for helping, hugging, and high-fives! When we have big feelings, we <b>use our words</b> to say what we need. We can always say "I need space" or "that bothered me."</div><div class="gc-ex"><div class="gc-xl">💎 HERO MOMENT:</div><div class="gc-xt">Your sibling has something you want. You say "Can I have a turn please?" Diamond earned! 💎</div></div></div></div>
+  <div class="gc-card G4"><div class="gc-hd"><span class="gc-ic">🧘</span><div><div class="gc-nm">USING CALM-DOWN TOOLS</div><div class="gc-tg">Big feelings are okay - heroes know what to do!</div></div></div><div class="gc-bd"><div class="gc-wh">WHAT THIS MEANS:</div><div class="gc-tx">Sometimes we feel really big feelings. We use calm-down tools - deep breaths, jumping, a hug, or our calm space. <b>Telling a grown-up how you feel is always a superpower!</b></div><div class="gc-ex"><div class="gc-xl">💎 HERO MOMENT:</div><div class="gc-xt">You feel really frustrated. You say "I feel mad - can you help me?" LEGENDARY! Diamond earned! 💎</div></div></div></div>
+  <div class="card" style="text-align:center;"><div class="h3" style="margin-bottom:10px;">⚔ SIDE GAME - HERO TRAINING</div><div class="body" style="margin-bottom:14px;font-size:15px;">Practice special skills every day - no rewards, just leveling up as a person!</div><button class="btn btn-di" onclick="go('pg-train')" style="margin:0 auto;display:block;padding:14px 20px;font-size:9px;">🏆 HERO TRAINING</button></div>
+  <button class="btn-block btn-em" onclick="sMode==='school'?goSchool('pg-school-chart'):go('pg-chart')" style="border-color:var(--em) #021002 #021002 var(--em);">⚔ LET'S PLAY! ⚔</button>
+  <div class="foot"><div class="foot-n">Sedrick Scott, M.S., Applied Behavioral Analysis</div><div class="foot-c">Using a trauma-informed, behavior-focused approach to support families</div></div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: SIBLING & EXTRA SPECIAL      -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-sibling">
+  <div class="nav"><div class="nav-logo" style="color:#dd88ff;">👫 TOGETHER TIME</div><button class="btn" onclick="home()">🏠 Home</button>
+    <button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);">🏫 School</button></div>
+
+  <div class="card" style="background:#0a0018;border-color:#aa44cc #1a0040 #1a0040 #aa44cc;">
+    <div style="font-family:var(--G);font-size:9px;color:#dd88ff;margin-bottom:8px;line-height:1.8;">💡 HOW THIS SECTION WORKS</div>
+    <div style="font-size:16px;font-weight:700;color:#ccaae0;line-height:1.7;">Both the Sibling Challenge and the Extra Special Moment use a <strong style="color:#fff;">point bank</strong>. Rewards do not unlock right away - they build up over time. This keeps rewards feeling meaningful and special.</div>
+  </div>
+
+  <!-- SIBLING CHALLENGE -->
+  <div class="sib-card">
+    <div class="sib-title">👫 SIBLING CHALLENGE!</div>
+    <div style="font-size:16px;font-weight:700;color:#ccaae0;margin-bottom:12px;line-height:1.7;">Today's challenge for both kids:</div>
+    <div class="sib-ch" id="sib-ch">Loading challenge...</div>
+    <div class="progress-wrap">
+      <div class="progress-lbl" style="color:#cc88ff;" id="sib-bank-lbl">0 of 3 challenges completed</div>
+      <div class="progress-track" style="background:#0e0018;border-color:#661188;"><div class="progress-fill" id="sib-bar" style="width:0%;background:#aa44cc;"></div></div>
+      <div class="progress-count" style="color:#cc88ff;" id="sib-count">💛 0 / 3 completed</div>
+    </div>
+    <div class="sib-btns">
+      <button class="sibbtn" id="sib-he" onclick="markSib('he')">✓ He did it!</button>
+      <button class="sibbtn" id="sib-she" onclick="markSib('she')">✓ Sibling did it too!</button>
+    </div>
+    <div class="reward-reveal" id="sib-rew">
+      <div class="rr-title" style="color:#ff99dd;">🎉 SIBLING REWARD UNLOCKED!</div>
+      <div class="rr-val" id="sib-rew-val"></div>
+      <div class="rr-sub" style="color:#ffaadd;">Both kids earned this! Talk to a parent to unlock it together. 💛</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
+      <button class="new-btn" onclick="newSib()" style="margin-top:0;">↺ New Challenge</button>
+      <button class="new-btn" onclick="resetSibReward()" style="margin-top:0;color:#ffaaaa;border-color:#883333;">↺ Reset Bank</button>
+    </div>
+  </div>
+
+  <!-- EXTRA SPECIAL MOMENTS -->
+  <div class="es-card">
+    <div class="es-title">⭐ EXTRA SPECIAL MOMENTS - PARENT ONLY</div>
+    <div class="es-sub">Did you witness something truly wonderful today - like helping their sibling without being asked, picking something up and putting it away on their own, telling the truth in a hard moment, or showing genuine kindness? These are the moments worth celebrating. Record it here and watch the reward build over time.</div>
+    <div class="progress-wrap">
+      <div class="progress-lbl" style="color:#cc88ff;" id="es-bank-lbl">0 of 5 moments recorded</div>
+      <div class="progress-track" style="background:#080012;border-color:#551188;"><div class="progress-fill" id="es-bar" style="width:0%;background:#8833aa;"></div></div>
+      <div class="progress-count" style="color:#cc88ff;" id="es-count">⭐ 0 / 5 recorded</div>
+    </div>
+    <div class="reward-reveal" id="es-rew" style="border-color:#8833aa;">
+      <div class="rr-title" style="color:#cc88ff;">🎉 EXTRA SPECIAL REWARD UNLOCKED!</div>
+      <div class="rr-val" id="es-rew-val"></div>
+      <div class="rr-sub" style="color:#bbaadd;">Decide as a family how to celebrate this achievement! 💛</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+      <button class="es-add-btn" onclick="addES()">⭐ PARENT: Mark a Moment</button>
+      <button class="new-btn" onclick="resetESReward()" style="margin-top:0;color:#ffaaaa;border-color:#883333;">↺ Reset Bank</button>
+    </div>
+  </div>
+
+  <div class="foot"><div class="foot-n">Sedrick Scott, M.S., Applied Behavioral Analysis</div><div class="foot-c">Using a trauma-informed, behavior-focused approach to support families</div></div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: HERO TRAINING                -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-train">
+  <div class="nav"><div class="nav-logo">🏆 HERO TRAINING</div><button class="btn" onclick="sMode==='school'?go('pg-school'):home()">🏠 Back</button></div>
+  <div class="h1" style="font-size:13px;">Special Skills - Side Game!</div>
+  <div class="sub">No rewards here - just leveling up as a hero! 💪</div>
+  <div class="skill"><div class="skill-hd"><span class="skill-ic">🌬️</span><div class="skill-nm">DRAGON BREATHS</div></div><div class="skill-ds">Breathe in through your nose for 4 counts, then out through your mouth for 4 counts. 3 times. Feel your body settle down!</div><div class="skill-hw"><div class="skill-hl">HOW TO PRACTICE:</div><div class="skill-ht">IN… 1, 2, 3, 4. OUT… 1, 2, 3, 4. Repeat 3 times!</div></div><button class="skill-pr" onclick="markSkill(this)">✓ I PRACTICED THIS TODAY!</button></div>
+  <div class="skill"><div class="skill-hd"><span class="skill-ic">🧘</span><div class="skill-nm">BODY CHECK</div></div><div class="skill-ds">Close your eyes and notice how each part of your body feels - from your feet all the way up to your head. This helps your brain calm down.</div><div class="skill-hw"><div class="skill-hl">HOW TO PRACTICE:</div><div class="skill-ht">Feet… legs… tummy… chest… shoulders… face. Breathe into each part.</div></div><button class="skill-pr" onclick="markSkill(this)">✓ I PRACTICED THIS TODAY!</button></div>
+  <div class="skill"><div class="skill-hd"><span class="skill-ic">🗣️</span><div class="skill-nm">"I FEEL" PRACTICE</div></div><div class="skill-ds">Practice using feeling words to tell someone how you feel. The more you practice, the easier it gets!</div><div class="skill-hw"><div class="skill-hl">HOW TO PRACTICE:</div><div class="skill-ht">Think of a feeling. Say: "I feel [word] because [reason]." Try 3 different feelings with someone!</div></div><button class="skill-pr" onclick="markSkill(this)">✓ I PRACTICED THIS TODAY!</button></div>
+  <div class="skill"><div class="skill-hd"><span class="skill-ic">⏳</span><div class="skill-nm">WAITING POWER</div></div><div class="skill-ds">Practice waiting calmly without asking or grabbing. This is a genuine superpower - patience is one of the strongest hero skills!</div><div class="skill-hw"><div class="skill-hl">HOW TO PRACTICE:</div><div class="skill-ht">Pick something you want. Wait 2 whole minutes without asking. Count in your head. You CAN do it!</div></div><button class="skill-pr" onclick="markSkill(this)">✓ I PRACTICED THIS TODAY!</button></div>
+  <div class="skill"><div class="skill-hd"><span class="skill-ic">🤝</span><div class="skill-nm">KIND WORDS CHALLENGE</div></div><div class="skill-ds">Practice saying something kind to the people around you. Kind words make others AND you feel amazing!</div><div class="skill-hw"><div class="skill-hl">HOW TO PRACTICE:</div><div class="skill-ht">Say one kind thing to mom, one to dad, and one to your sibling today. Watch their faces light up!</div></div><button class="skill-pr" onclick="markSkill(this)">✓ I PRACTICED THIS TODAY!</button></div>
+  <div class="skill"><div class="skill-hd"><span class="skill-ic">🔢</span><div class="skill-nm">COUNT TO 10 POWER</div></div><div class="skill-ds">When a big feeling starts to bubble up, STOP and count slowly to 10 before doing anything. This gives your hero brain time to make a great choice!</div><div class="skill-hw"><div class="skill-hl">HOW TO PRACTICE:</div><div class="skill-ht">Big feeling? STOP. Count: 1… 2… 3… 4… 5… 6… 7… 8… 9… 10. Now choose wisely!</div></div><button class="skill-pr" onclick="markSkill(this)">✓ I PRACTICED THIS TODAY!</button></div>
+  <div class="foot"><div class="foot-n">Sedrick Scott, M.S., Applied Behavioral Analysis</div><div class="foot-c">Using a trauma-informed, behavior-focused approach to support families</div></div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: PARENT CORNER                -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-parent">
+  <div class="nav"><div class="nav-logo" style="color:var(--dia);">👩 PARENT CORNER</div><button class="btn" onclick="home()">🏠 Home</button>
+    <button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);">🏫 School</button></div>
+
+  <div class="card" style="background:#080820;border-color:#4444aa #0a0a20 #0a0a20 #4444aa;">
+    <div style="font-family:var(--G);font-size:9px;color:#aaaaff;margin-bottom:8px;line-height:1.8;">💙 A NOTE FOR YOU</div>
+    <div style="font-size:16px;font-weight:700;color:#ccccff;line-height:1.7;">Showing up with a plan and a chart like this says a lot about how much you care. Structure and warmth together - that is one of the most helpful things a parent can offer. You do not have to do this perfectly. Consistency matters more than perfection, and the fact that you are trying already counts for a lot.</div>
+    <div style="font-size:15px;font-weight:700;color:#aaaadd;line-height:1.7;margin-top:10px;padding:10px;background:#0a0a28;border-radius:3px;border-left:3px solid #5555aa;">If your child is working with a therapist, school support team, or pediatrician - bring this tool into those conversations. A professional who knows your child can help you use it more effectively. This chart works best as a support alongside that kind of guidance.</div>
+  </div>
+
+  <!-- MASTERY -->
+  <div class="mastery-wrap">
+    <div class="mastery-t">📈 MASTERY PROGRESS</div>
+    <div class="mastery-sub">How consistently is he meeting each goal? Green = at or above your goal percentage. Yellow = making progress. Blue = still building. Settings let you adjust the threshold and window.</div>
+    <div id="mastery-content"><div style="font-size:16px;font-weight:700;color:#7777aa;">No data yet - check back after a few days of use!</div></div>
+  </div>
+
+  <!-- PARENT TIPS -->
+  <div class="card" style="background:#0a1a04;border-color:#3a6a1a #0a2008 #0a2008 #3a6a1a;">
+    <div class="h2" style="color:#90dd60;margin-bottom:14px;">💡 WHAT WORKS - PARENT TIPS</div>
+
+    <div class="inset" style="background:#081408;border-color:#2a5010;">
+      <div class="h4" style="color:#90dd60;">⚡ FAST, CALM &amp; CONSISTENT</div>
+      <div class="tip-body">This system works best when your response to pushback is fast, calm, and consistent. There is no need to debate, explain at length, or show frustration. A neutral tone and a simple redirect back to the chart lets the system do the work for you. Your calm is contagious.</div>
+    </div>
+
+    <div class="inset" style="background:#081408;border-color:#2a5010;">
+      <div class="h4" style="color:#90dd60;">🔗 USE "FIRST… THEN…" LANGUAGE</div>
+      <div class="tip-body" style="margin-bottom:10px;">Frame every direction as a short two-part statement. This removes negotiation and makes the reward feel immediate and real.</div>
+      <div style="background:#041004;border-radius:3px;padding:12px;">
+        <div style="font-size:16px;font-weight:800;color:#fff;line-height:1.9;">"First shoes on, then helper job."<br>"First brush teeth, then you pick the song."<br>"First we get in the car, then you choose the playlist."</div>
+      </div>
+    </div>
+
+    <div class="inset" style="background:#081408;border-color:#2a5010;">
+      <div class="h4" style="color:#90dd60;">🤐 SAY IT ONCE - POINT TO THE CHART</div>
+      <div class="tip-body">Say the direction once. If there is no response, repeat it briefly one time and point to the chart. More words often mean more negotiation. The chart explains the expectations - you do not have to. Trust the system you set up.</div>
+    </div>
+
+    <div class="inset" style="background:#081408;border-color:#2a5010;">
+      <div class="h4" style="color:#90dd60;">🏆 CATCH SUCCESS THE MOMENT IT STARTS</div>
+      <div class="tip-body">The moment he begins the right behavior, say something specific and positive right away. <strong style="color:#fff;">"I see you walking right over - that is staying safe."</strong> You are not giving a diamond in that moment. Diamonds get recorded during the check-in review at the end of each period. But your voice in the moment is what connects the behavior to the reward and makes it feel real for him. Do not wait until checkout to say something - the in-the-moment praise is where the real learning happens.</div>
+    </div>
+
+    <div class="inset" style="background:#081408;border-color:#2a5010;">
+      <div class="h4" style="color:#90dd60;">⏱ USE TRANSITION WARNINGS</div>
+      <div class="tip-body" style="margin-bottom:10px;">Kids who have a hard time with impulse control often struggle most at transitions. Give advance notice so his body and brain can prepare. Use a predictable sequence every time:</div>
+      <div style="background:#041004;border-radius:3px;padding:12px;">
+        <div style="font-size:16px;font-weight:800;color:#fff;line-height:1.9;">"Five minutes - wrapping up soon."<br>"Two more minutes - almost time to stop."<br>"One more minute - finishing up now."<br>"Time to stop - great job listening!"</div>
+      </div>
+    </div>
+
+    <div class="inset" style="background:#081408;border-color:#2a5010;">
+      <div class="h4" style="color:#90dd60;">💛 LEAD WITH CONNECTION</div>
+      <div class="tip-body">Give short bursts of warm praise and genuine connection <strong style="color:#fff;">before</strong> a challenging moment arrives. Children who feel seen and filled up with positive attention have more capacity to handle redirection. Try to notice and name five positive things before responding to one that needs support.</div>
+    </div>
+  </div>
+
+    <!-- WHY IT WORKS -->
+  <div class="card" style="background:#0a0a1e;border-color:#5555aa #0e0e26 #0e0e26 #5555aa;">
+    <div class="h2" style="color:#aaaaff;margin-bottom:14px;">🧠 WHY THIS APPROACH WORKS</div>
+    <div class="inset" style="background:#0c0c28;border-color:#3a3a88;">
+      <div class="h4" style="color:#aaaaff;">QUICK FEEDBACK MAKES A DIFFERENCE</div>
+      <div class="tip-body" style="color:#ccccff;">Kids who have a lot of energy and move fast need feedback close in time to the behavior. That is why this chart splits the day into three separate sections instead of one big daily goal. Each section is its own fresh start and its own chance to win something. A smaller window means he does not have to wait long to see results.</div>
+    </div>
+    <div class="inset" style="background:#0c0c28;border-color:#3a3a88;">
+      <div class="h4" style="color:#aaaaff;">FEELINGS CHECK-IN IS NOT JUST WARM-UP</div>
+      <div class="tip-body" style="color:#ccccff;">Each time he names a feeling, he is practicing the ability to notice what is happening inside his body before things get too big. That skill takes real repetition to build. This chart gives him a chance to practice it three times a day, in a calm and low-pressure way.</div>
+    </div>
+    <div class="inset" style="background:#0c0c28;border-color:#3a3a88;">
+      <div class="h4" style="color:#aaaaff;">WHAT IT MEANS WHEN A GOAL IS "MASTERED"</div>
+      <div class="tip-body" style="color:#ccccff;">When a goal stays consistently high over time, it means the behavior is becoming more automatic. He is starting to do it without needing to think about it as much. That is the real goal. Once a skill feels natural, you can offer the reward less often and he will usually keep the habit going.</div>
+    </div>
+  </div>
+
+  <!-- WHEN TO ADJUST -->
+  <div class="card" style="background:#100e00;border-color:#7a5800 #1a1200 #1a1200 #7a5800;">
+    <div class="h2" style="color:var(--gold);margin-bottom:14px;">📋 WHEN &amp; HOW TO ADJUST THE SYSTEM</div>
+    <div class="inset" style="background:#0e0c00;border-color:#5a4800;">
+      <div style="font-size:16px;font-weight:800;color:#fff;margin-bottom:6px;">When a goal shows 80%+ for two weeks:</div>
+      <div class="tip-body" style="color:#ddcc80;">He has likely built a real habit around that goal. You can start to ease up on how often you offer the reward for it, or raise the bar a little. Celebrate it with him - this is genuinely great progress.</div>
+    </div>
+    <div class="inset" style="background:#0e0c00;border-color:#5a4800;">
+      <div style="font-size:16px;font-weight:800;color:#fff;margin-bottom:6px;">When a goal is between 50–79%:</div>
+      <div class="tip-body" style="color:#ddcc80;">He is working on it. The most helpful thing right now is to keep the system steady and keep noticing every win, even the small ones. Changing too much too soon can interrupt the progress that is quietly building. Stay the course.</div>
+    </div>
+    <div class="inset" style="background:#0e0c00;border-color:#5a4800;">
+      <div style="font-size:16px;font-weight:800;color:#fff;margin-bottom:6px;">When a goal is below 50% over time:</div>
+      <div class="tip-body" style="color:#ddcc80;">Something in the environment is making this goal harder to reach. Look at what is happening right before: transitions, hunger or tiredness, length of waiting time, sensory environment, or how much connection time he had before that moment. The answer is usually in what happened earlier in the day.</div>
+    </div>
+  </div>
+
+  <div class="foot"><div class="foot-n">Sedrick Scott, M.S., Applied Behavioral Analysis</div><div class="foot-c">Using a trauma-informed, behavior-focused approach to support families</div></div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: RESOURCES                    -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-resources">
+  <div class="nav"><div class="nav-logo" style="color:#a8ee60;">📚 RESOURCES</div><button class="btn" onclick="home()">🏠 Home</button>
+    <button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);">🏫 School</button></div>
+  <div class="h1" style="font-size:13px;">Printable Tools</div>
+  <div class="sub" style="font-size:15px;">Use these when the app isn't available - print them, laminate them, and keep them where he can reach them!</div>
+
+  <div class="resource-card">
+    <div class="resource-title">⭐ THINK SHEET - "My Thinking Helper"</div>
+    <div class="resource-desc">An age-appropriate reflection tool for a 6-year-old. Visual and simple - uses emoji for feeling identification, body sensation checkboxes, calm-down tool selection, and a space to write or draw what happened and what he will try next time. No shame, no punishment - just processing and growing.</div>
+    <button class="print-btn" onclick="window.open('worksheets/worksheet_think_sheet.pdf')">⬇️ DOWNLOAD PDF</button>
+  </div>
+
+  <div class="resource-card">
+    <div class="resource-title">🌡️ FEELINGS THERMOMETER</div>
+    <div class="resource-desc">A visual 4-level feelings scale (Volcano, Bubbling Up, Noticing, Calm &amp; Ready). Each level shows what the body feels like and what to do. Great for posting on the fridge or in a calming corner. Use it daily to check in: "What level are you right now?"</div>
+    <button class="print-btn" onclick="window.open('worksheets/worksheet_feelings_thermometer.pdf')">⬇️ DOWNLOAD PDF</button>
+  </div>
+
+  <div class="resource-card">
+    <div class="resource-title">🔗 FIRST… THEN… BOARD</div>
+    <div class="resource-desc">A reusable visual board for setting up First-Then expectations throughout the day. Reduces negotiation and makes transitions smoother. Write in the expectation and the reward together each morning. Fill in, wipe off, and reuse daily.</div>
+    <button class="print-btn" onclick="window.open('worksheets/worksheet_first_then_board.pdf')">⬇️ DOWNLOAD PDF</button>
+  </div>
+
+  <div class="resource-card">
+    <div class="resource-title">🧘 CALM-DOWN MENU CARDS</div>
+    <div class="resource-desc">8 printable calm-down strategy cards, each with a large emoji, the strategy name, and simple instructions. Cut them out, laminate if possible, and keep them in a calm-down kit or posted in your calm-down space. Let him pick one when a big feeling arrives.</div>
+    <button class="print-btn" onclick="window.open('worksheets/worksheet_calm_down_cards.pdf')">⬇️ DOWNLOAD PDF</button>
+  </div>
+
+  <div class="resource-card">
+    <div class="resource-title">🌅 MORNING ROUTINE CHECKLIST</div>
+    <div class="resource-desc">A visual step-by-step morning routine checklist with large emoji anchors for each step. Removes the need for repeated verbal prompts - just point to the chart! Post it in the bathroom or kitchen where he gets ready each morning.</div>
+    <button class="print-btn" onclick="window.open('worksheets/worksheet_morning_routine.pdf')">⬇️ DOWNLOAD PDF</button>
+  </div>
+
+  <div class="card" style="background:#0a1a04;border-color:#3a6a1a #0a2008 #0a2008 #3a6a1a;">
+    <div class="h3" style="color:#90dd60;margin-bottom:10px;">💡 TIPS FOR USING PRINTED TOOLS</div>
+    <div class="body" style="font-size:15px;margin-bottom:10px;">• <strong>Laminate</strong> what you use most - the First-Then board and Morning Checklist especially. Dry-erase markers make them reusable.</div>
+    <div class="body" style="font-size:15px;margin-bottom:10px;">• <strong>Post them at eye level</strong> where he actually is - bathroom mirror, kitchen table, the back of the car headrest.</div>
+    <div class="body" style="font-size:15px;margin-bottom:10px;">• <strong>Use the Think Sheet gently</strong> - not as a consequence, but as a calm, collaborative reflection tool after a big feeling passes. Sit with him, fill it out together, keep your voice warm and curious.</div>
+    <div class="body" style="font-size:15px;">• <strong>The Feelings Thermometer</strong> works best when you use it yourself too - "I'm at a level 2 right now, so I'm going to take a breath." Modeling is powerful.</div>
+  </div>
+
+  <div class="foot"><div class="foot-n">Sedrick Scott, M.S., Applied Behavioral Analysis</div><div class="foot-c">Using a trauma-informed, behavior-focused approach to support families</div></div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: SHARE                        -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-share">
+  <div class="nav"><div class="nav-logo">📬 SHARE MY DAY</div><button class="btn" onclick="home()">🏠 Home</button>
+    <button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);">🏫 School</button></div>
+  <div class="card"><div class="h2" style="margin-bottom:10px;">TODAY'S REPORT</div><div class="shrpt" id="shrpt"></div></div>
+  <button class="sh-btn sh-gm" id="gmailbtn">📧 Open in Gmail</button>
+  <button class="sh-btn sh-cp" onclick="copyReport()">📋 Copy Report</button>
+  <div id="cpconf" style="display:none;text-align:center;font-size:17px;font-weight:900;color:var(--em);margin-bottom:14px;padding:12px;">✓ Copied! Paste into Gmail or Google Sheets.</div>
+  <div style="font-size:15px;font-weight:700;color:#7777aa;text-align:center;margin-bottom:10px;">Paste into a Google Sheet to track progress over time!</div>
+  <div style="font-size:14px;font-weight:700;color:#555577;text-align:center;">To use the email button, add your email address in ⚙ Settings first.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: SETTINGS                     -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-sets">
+  <div class="nav"><div class="nav-logo">⚙ SETTINGS</div><button class="btn" onclick="home()">🏠 Home</button>
+    <button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);">🏫 School</button></div>
+  <div class="card" style="background:#080820;border-color:#4444aa #0a0a20 #0a0a20 #4444aa;margin-bottom:16px;">
+    <div style="font-size:16px;font-weight:700;color:#aaaadd;line-height:1.7;">Tap any section to open it and make changes. Tap <strong style="color:#fff;">Save All Settings</strong> at the bottom when you're done.</div>
+  </div>
+
+  <details open>
+    <summary>👤 Hero &amp; Family Info</summary>
+    <div class="set-body">
+      <label class="set-lbl">Hero's Name (shows on chart and reports)</label>
+      <input class="set-inp" id="sn" type="text" placeholder="Type hero's name...">
+      <label class="set-lbl">Sibling's Name (shows in Sibling Challenge)</label>
+      <input class="set-inp" id="sb" type="text" placeholder="Type sibling's name...">
+      <label class="set-lbl">Parent's Email (for sending daily reports)</label>
+      <input class="set-inp" id="se" type="email" placeholder="parent@email.com">
+    </div>
+  </details>
+
+  <details>
+    <summary>🏆 Daily &amp; Period Rewards</summary>
+    <div class="set-body">
+      <div style="font-size:15px;font-weight:700;color:#aaaadd;margin-bottom:12px;line-height:1.7;">One reward per line. Start each line with an emoji for the best look on the reward buttons.</div>
+      <label class="set-lbl">Daily Reward Options (tap the banner on the chart page)</label>
+      <textarea class="set-ta" id="s-daily" rows="8"></textarea>
+      <div class="ep-wrap"><div class="ep-lbl">TAP AN EMOJI TO ADD IT</div><div class="ep-grid"><span class="ep-btn" onclick="insertEm('s-daily','🎵')">🎵</span><span class="ep-btn" onclick="insertEm('s-daily','🎬')">🎬</span><span class="ep-btn" onclick="insertEm('s-daily','🎮')">🎮</span><span class="ep-btn" onclick="insertEm('s-daily','🎲')">🎲</span><span class="ep-btn" onclick="insertEm('s-daily','📖')">📖</span><span class="ep-btn" onclick="insertEm('s-daily','📚')">📚</span><span class="ep-btn" onclick="insertEm('s-daily','🎨')">🎨</span><span class="ep-btn" onclick="insertEm('s-daily','🏆')">🏆</span><span class="ep-btn" onclick="insertEm('s-daily','⭐')">⭐</span><span class="ep-btn" onclick="insertEm('s-daily','🌟')">🌟</span><span class="ep-btn" onclick="insertEm('s-daily','🎯')">🎯</span><span class="ep-btn" onclick="insertEm('s-daily','🎪')">🎪</span><span class="ep-btn" onclick="insertEm('s-daily','🎡')">🎡</span><span class="ep-btn" onclick="insertEm('s-daily','🎠')">🎠</span><span class="ep-btn" onclick="insertEm('s-daily','🚀')">🚀</span><span class="ep-btn" onclick="insertEm('s-daily','🌈')">🌈</span><span class="ep-btn" onclick="insertEm('s-daily','🎭')">🎭</span><span class="ep-btn" onclick="insertEm('s-daily','🏄')">🏄</span><span class="ep-btn" onclick="insertEm('s-daily','🎤')">🎤</span><span class="ep-btn" onclick="insertEm('s-daily','🎧')">🎧</span><span class="ep-btn" onclick="insertEm('s-daily','🎺')">🎺</span><span class="ep-btn" onclick="insertEm('s-daily','⚽')">⚽</span><span class="ep-btn" onclick="insertEm('s-daily','🏀')">🏀</span><span class="ep-btn" onclick="insertEm('s-daily','🎸')">🎸</span><span class="ep-btn" onclick="insertEm('s-daily','🎻')">🎻</span><span class="ep-btn" onclick="insertEm('s-daily','👩')">👩</span><span class="ep-btn" onclick="insertEm('s-daily','👨')">👨</span><span class="ep-btn" onclick="insertEm('s-daily','👧')">👧</span><span class="ep-btn" onclick="insertEm('s-daily','👦')">👦</span><span class="ep-btn" onclick="insertEm('s-daily','👶')">👶</span><span class="ep-btn" onclick="insertEm('s-daily','👫')">👫</span><span class="ep-btn" onclick="insertEm('s-daily','👨‍👩‍👧')">👨‍👩‍👧</span><span class="ep-btn" onclick="insertEm('s-daily','🤗')">🤗</span><span class="ep-btn" onclick="insertEm('s-daily','🤝')">🤝</span><span class="ep-btn" onclick="insertEm('s-daily','🫂')">🫂</span><span class="ep-btn" onclick="insertEm('s-daily','💛')">💛</span><span class="ep-btn" onclick="insertEm('s-daily','❤️')">❤️</span><span class="ep-btn" onclick="insertEm('s-daily','💙')">💙</span><span class="ep-btn" onclick="insertEm('s-daily','💚')">💚</span><span class="ep-btn" onclick="insertEm('s-daily','💜')">💜</span><span class="ep-btn" onclick="insertEm('s-daily','🏠')">🏠</span><span class="ep-btn" onclick="insertEm('s-daily','🛏️')">🛏️</span><span class="ep-btn" onclick="insertEm('s-daily','🛋️')">🛋️</span><span class="ep-btn" onclick="insertEm('s-daily','🏰')">🏰</span><span class="ep-btn" onclick="insertEm('s-daily','🧸')">🧸</span><span class="ep-btn" onclick="insertEm('s-daily','📦')">📦</span><span class="ep-btn" onclick="insertEm('s-daily','🎒')">🎒</span><span class="ep-btn" onclick="insertEm('s-daily','👕')">👕</span><span class="ep-btn" onclick="insertEm('s-daily','👟')">👟</span><span class="ep-btn" onclick="insertEm('s-daily','🪥')">🪥</span><span class="ep-btn" onclick="insertEm('s-daily','🛁')">🛁</span><span class="ep-btn" onclick="insertEm('s-daily','🪴')">🪴</span></div><div class="ep-hint">Tap to add to the list above</div></div>
+      <label class="set-lbl">🌅 Morning Rewards (6:30–8:30 AM) - No screen time or food</label>
+      <textarea class="set-ta" id="s-prew0" rows="5"></textarea>
+      <div class="ep-wrap"><div class="ep-lbl">TAP AN EMOJI TO ADD IT</div><div class="ep-grid"><span class="ep-btn" onclick="insertEm('s-prew0','🎵')">🎵</span><span class="ep-btn" onclick="insertEm('s-prew0','🎬')">🎬</span><span class="ep-btn" onclick="insertEm('s-prew0','🎮')">🎮</span><span class="ep-btn" onclick="insertEm('s-prew0','🎲')">🎲</span><span class="ep-btn" onclick="insertEm('s-prew0','📖')">📖</span><span class="ep-btn" onclick="insertEm('s-prew0','📚')">📚</span><span class="ep-btn" onclick="insertEm('s-prew0','🎨')">🎨</span><span class="ep-btn" onclick="insertEm('s-prew0','🏆')">🏆</span><span class="ep-btn" onclick="insertEm('s-prew0','⭐')">⭐</span><span class="ep-btn" onclick="insertEm('s-prew0','🌟')">🌟</span><span class="ep-btn" onclick="insertEm('s-prew0','🎯')">🎯</span><span class="ep-btn" onclick="insertEm('s-prew0','🎪')">🎪</span><span class="ep-btn" onclick="insertEm('s-prew0','🎡')">🎡</span><span class="ep-btn" onclick="insertEm('s-prew0','🎠')">🎠</span><span class="ep-btn" onclick="insertEm('s-prew0','🚀')">🚀</span><span class="ep-btn" onclick="insertEm('s-prew0','🌈')">🌈</span><span class="ep-btn" onclick="insertEm('s-prew0','🎭')">🎭</span><span class="ep-btn" onclick="insertEm('s-prew0','🏄')">🏄</span><span class="ep-btn" onclick="insertEm('s-prew0','🎤')">🎤</span><span class="ep-btn" onclick="insertEm('s-prew0','🎧')">🎧</span><span class="ep-btn" onclick="insertEm('s-prew0','🎺')">🎺</span><span class="ep-btn" onclick="insertEm('s-prew0','⚽')">⚽</span><span class="ep-btn" onclick="insertEm('s-prew0','🏀')">🏀</span><span class="ep-btn" onclick="insertEm('s-prew0','🎸')">🎸</span><span class="ep-btn" onclick="insertEm('s-prew0','🎻')">🎻</span><span class="ep-btn" onclick="insertEm('s-prew0','👩')">👩</span><span class="ep-btn" onclick="insertEm('s-prew0','👨')">👨</span><span class="ep-btn" onclick="insertEm('s-prew0','👧')">👧</span><span class="ep-btn" onclick="insertEm('s-prew0','👦')">👦</span><span class="ep-btn" onclick="insertEm('s-prew0','👶')">👶</span><span class="ep-btn" onclick="insertEm('s-prew0','👫')">👫</span><span class="ep-btn" onclick="insertEm('s-prew0','👨‍👩‍👧')">👨‍👩‍👧</span><span class="ep-btn" onclick="insertEm('s-prew0','🤗')">🤗</span><span class="ep-btn" onclick="insertEm('s-prew0','🤝')">🤝</span><span class="ep-btn" onclick="insertEm('s-prew0','🫂')">🫂</span><span class="ep-btn" onclick="insertEm('s-prew0','💛')">💛</span><span class="ep-btn" onclick="insertEm('s-prew0','❤️')">❤️</span><span class="ep-btn" onclick="insertEm('s-prew0','💙')">💙</span><span class="ep-btn" onclick="insertEm('s-prew0','💚')">💚</span><span class="ep-btn" onclick="insertEm('s-prew0','💜')">💜</span><span class="ep-btn" onclick="insertEm('s-prew0','🏠')">🏠</span><span class="ep-btn" onclick="insertEm('s-prew0','🛏️')">🛏️</span><span class="ep-btn" onclick="insertEm('s-prew0','🛋️')">🛋️</span><span class="ep-btn" onclick="insertEm('s-prew0','🏰')">🏰</span><span class="ep-btn" onclick="insertEm('s-prew0','🧸')">🧸</span><span class="ep-btn" onclick="insertEm('s-prew0','📦')">📦</span><span class="ep-btn" onclick="insertEm('s-prew0','🎒')">🎒</span><span class="ep-btn" onclick="insertEm('s-prew0','👕')">👕</span><span class="ep-btn" onclick="insertEm('s-prew0','👟')">👟</span><span class="ep-btn" onclick="insertEm('s-prew0','🪥')">🪥</span><span class="ep-btn" onclick="insertEm('s-prew0','🛁')">🛁</span><span class="ep-btn" onclick="insertEm('s-prew0','🪴')">🪴</span><span class="ep-btn" onclick="insertEm('s-prew0','⏰')">⏰</span><span class="ep-btn" onclick="insertEm('s-prew0','🚶')">🚶</span><span class="ep-btn" onclick="insertEm('s-prew0','🏃')">🏃</span><span class="ep-btn" onclick="insertEm('s-prew0','🤸')">🤸</span><span class="ep-btn" onclick="insertEm('s-prew0','💤')">💤</span><span class="ep-btn" onclick="insertEm('s-prew0','🙏')">🙏</span><span class="ep-btn" onclick="insertEm('s-prew0','✅')">✅</span><span class="ep-btn" onclick="insertEm('s-prew0','🔑')">🔑</span><span class="ep-btn" onclick="insertEm('s-prew0','📝')">📝</span><span class="ep-btn" onclick="insertEm('s-prew0','📬')">📬</span><span class="ep-btn" onclick="insertEm('s-prew0','🎁')">🎁</span><span class="ep-btn" onclick="insertEm('s-prew0','🎉')">🎉</span></div><div class="ep-hint">Tap to add to the list above</div></div>
+      <label class="set-lbl">☀️ Midday Rewards (3:00–5:30 PM)</label>
+      <textarea class="set-ta" id="s-prew1" rows="5"></textarea>
+      <div class="ep-wrap"><div class="ep-lbl">TAP AN EMOJI TO ADD IT</div><div class="ep-grid"><span class="ep-btn" onclick="insertEm('s-prew1','🎵')">🎵</span><span class="ep-btn" onclick="insertEm('s-prew1','🎬')">🎬</span><span class="ep-btn" onclick="insertEm('s-prew1','🎮')">🎮</span><span class="ep-btn" onclick="insertEm('s-prew1','🎲')">🎲</span><span class="ep-btn" onclick="insertEm('s-prew1','📖')">📖</span><span class="ep-btn" onclick="insertEm('s-prew1','📚')">📚</span><span class="ep-btn" onclick="insertEm('s-prew1','🎨')">🎨</span><span class="ep-btn" onclick="insertEm('s-prew1','🏆')">🏆</span><span class="ep-btn" onclick="insertEm('s-prew1','⭐')">⭐</span><span class="ep-btn" onclick="insertEm('s-prew1','🌟')">🌟</span><span class="ep-btn" onclick="insertEm('s-prew1','🎯')">🎯</span><span class="ep-btn" onclick="insertEm('s-prew1','🎪')">🎪</span><span class="ep-btn" onclick="insertEm('s-prew1','🎡')">🎡</span><span class="ep-btn" onclick="insertEm('s-prew1','🎠')">🎠</span><span class="ep-btn" onclick="insertEm('s-prew1','🚀')">🚀</span><span class="ep-btn" onclick="insertEm('s-prew1','🌈')">🌈</span><span class="ep-btn" onclick="insertEm('s-prew1','🎭')">🎭</span><span class="ep-btn" onclick="insertEm('s-prew1','🏄')">🏄</span><span class="ep-btn" onclick="insertEm('s-prew1','🎤')">🎤</span><span class="ep-btn" onclick="insertEm('s-prew1','🎧')">🎧</span><span class="ep-btn" onclick="insertEm('s-prew1','🎺')">🎺</span><span class="ep-btn" onclick="insertEm('s-prew1','⚽')">⚽</span><span class="ep-btn" onclick="insertEm('s-prew1','🏀')">🏀</span><span class="ep-btn" onclick="insertEm('s-prew1','🎸')">🎸</span><span class="ep-btn" onclick="insertEm('s-prew1','🎻')">🎻</span><span class="ep-btn" onclick="insertEm('s-prew1','🌳')">🌳</span><span class="ep-btn" onclick="insertEm('s-prew1','🌻')">🌻</span><span class="ep-btn" onclick="insertEm('s-prew1','🌈')">🌈</span><span class="ep-btn" onclick="insertEm('s-prew1','☀️')">☀️</span><span class="ep-btn" onclick="insertEm('s-prew1','🌙')">🌙</span><span class="ep-btn" onclick="insertEm('s-prew1','⭐')">⭐</span><span class="ep-btn" onclick="insertEm('s-prew1','🦋')">🦋</span><span class="ep-btn" onclick="insertEm('s-prew1','🌺')">🌺</span><span class="ep-btn" onclick="insertEm('s-prew1','🌿')">🌿</span><span class="ep-btn" onclick="insertEm('s-prew1','🌊')">🌊</span><span class="ep-btn" onclick="insertEm('s-prew1','🏔️')">🏔️</span><span class="ep-btn" onclick="insertEm('s-prew1','🌅')">🌅</span><span class="ep-btn" onclick="insertEm('s-prew1','👩')">👩</span><span class="ep-btn" onclick="insertEm('s-prew1','👨')">👨</span><span class="ep-btn" onclick="insertEm('s-prew1','👧')">👧</span><span class="ep-btn" onclick="insertEm('s-prew1','👦')">👦</span><span class="ep-btn" onclick="insertEm('s-prew1','👶')">👶</span><span class="ep-btn" onclick="insertEm('s-prew1','👫')">👫</span><span class="ep-btn" onclick="insertEm('s-prew1','👨‍👩‍👧')">👨‍👩‍👧</span><span class="ep-btn" onclick="insertEm('s-prew1','🤗')">🤗</span><span class="ep-btn" onclick="insertEm('s-prew1','🤝')">🤝</span><span class="ep-btn" onclick="insertEm('s-prew1','🫂')">🫂</span><span class="ep-btn" onclick="insertEm('s-prew1','💛')">💛</span><span class="ep-btn" onclick="insertEm('s-prew1','❤️')">❤️</span><span class="ep-btn" onclick="insertEm('s-prew1','💙')">💙</span><span class="ep-btn" onclick="insertEm('s-prew1','💚')">💚</span><span class="ep-btn" onclick="insertEm('s-prew1','💜')">💜</span><span class="ep-btn" onclick="insertEm('s-prew1','⏰')">⏰</span><span class="ep-btn" onclick="insertEm('s-prew1','🚶')">🚶</span><span class="ep-btn" onclick="insertEm('s-prew1','🏃')">🏃</span><span class="ep-btn" onclick="insertEm('s-prew1','🤸')">🤸</span><span class="ep-btn" onclick="insertEm('s-prew1','💤')">💤</span><span class="ep-btn" onclick="insertEm('s-prew1','🙏')">🙏</span><span class="ep-btn" onclick="insertEm('s-prew1','✅')">✅</span><span class="ep-btn" onclick="insertEm('s-prew1','🔑')">🔑</span><span class="ep-btn" onclick="insertEm('s-prew1','📝')">📝</span><span class="ep-btn" onclick="insertEm('s-prew1','📬')">📬</span><span class="ep-btn" onclick="insertEm('s-prew1','🎁')">🎁</span><span class="ep-btn" onclick="insertEm('s-prew1','🎉')">🎉</span></div><div class="ep-hint">Tap to add to the list above</div></div>
+      <label class="set-lbl">🌙 Evening Rewards (5:30–8:30 PM)</label>
+      <textarea class="set-ta" id="s-prew2" rows="5"></textarea>
+      <div class="ep-wrap"><div class="ep-lbl">TAP AN EMOJI TO ADD IT</div><div class="ep-grid"><span class="ep-btn" onclick="insertEm('s-prew2','🎵')">🎵</span><span class="ep-btn" onclick="insertEm('s-prew2','🎬')">🎬</span><span class="ep-btn" onclick="insertEm('s-prew2','🎮')">🎮</span><span class="ep-btn" onclick="insertEm('s-prew2','🎲')">🎲</span><span class="ep-btn" onclick="insertEm('s-prew2','📖')">📖</span><span class="ep-btn" onclick="insertEm('s-prew2','📚')">📚</span><span class="ep-btn" onclick="insertEm('s-prew2','🎨')">🎨</span><span class="ep-btn" onclick="insertEm('s-prew2','🏆')">🏆</span><span class="ep-btn" onclick="insertEm('s-prew2','⭐')">⭐</span><span class="ep-btn" onclick="insertEm('s-prew2','🌟')">🌟</span><span class="ep-btn" onclick="insertEm('s-prew2','🎯')">🎯</span><span class="ep-btn" onclick="insertEm('s-prew2','🎪')">🎪</span><span class="ep-btn" onclick="insertEm('s-prew2','🎡')">🎡</span><span class="ep-btn" onclick="insertEm('s-prew2','🎠')">🎠</span><span class="ep-btn" onclick="insertEm('s-prew2','🚀')">🚀</span><span class="ep-btn" onclick="insertEm('s-prew2','🌈')">🌈</span><span class="ep-btn" onclick="insertEm('s-prew2','🎭')">🎭</span><span class="ep-btn" onclick="insertEm('s-prew2','🏄')">🏄</span><span class="ep-btn" onclick="insertEm('s-prew2','🎤')">🎤</span><span class="ep-btn" onclick="insertEm('s-prew2','🎧')">🎧</span><span class="ep-btn" onclick="insertEm('s-prew2','🎺')">🎺</span><span class="ep-btn" onclick="insertEm('s-prew2','⚽')">⚽</span><span class="ep-btn" onclick="insertEm('s-prew2','🏀')">🏀</span><span class="ep-btn" onclick="insertEm('s-prew2','🎸')">🎸</span><span class="ep-btn" onclick="insertEm('s-prew2','🎻')">🎻</span><span class="ep-btn" onclick="insertEm('s-prew2','🏠')">🏠</span><span class="ep-btn" onclick="insertEm('s-prew2','🛏️')">🛏️</span><span class="ep-btn" onclick="insertEm('s-prew2','🛋️')">🛋️</span><span class="ep-btn" onclick="insertEm('s-prew2','🏰')">🏰</span><span class="ep-btn" onclick="insertEm('s-prew2','🧸')">🧸</span><span class="ep-btn" onclick="insertEm('s-prew2','📦')">📦</span><span class="ep-btn" onclick="insertEm('s-prew2','🎒')">🎒</span><span class="ep-btn" onclick="insertEm('s-prew2','👕')">👕</span><span class="ep-btn" onclick="insertEm('s-prew2','👟')">👟</span><span class="ep-btn" onclick="insertEm('s-prew2','🪥')">🪥</span><span class="ep-btn" onclick="insertEm('s-prew2','🛁')">🛁</span><span class="ep-btn" onclick="insertEm('s-prew2','🪴')">🪴</span><span class="ep-btn" onclick="insertEm('s-prew2','👩')">👩</span><span class="ep-btn" onclick="insertEm('s-prew2','👨')">👨</span><span class="ep-btn" onclick="insertEm('s-prew2','👧')">👧</span><span class="ep-btn" onclick="insertEm('s-prew2','👦')">👦</span><span class="ep-btn" onclick="insertEm('s-prew2','👶')">👶</span><span class="ep-btn" onclick="insertEm('s-prew2','👫')">👫</span><span class="ep-btn" onclick="insertEm('s-prew2','👨‍👩‍👧')">👨‍👩‍👧</span><span class="ep-btn" onclick="insertEm('s-prew2','🤗')">🤗</span><span class="ep-btn" onclick="insertEm('s-prew2','🤝')">🤝</span><span class="ep-btn" onclick="insertEm('s-prew2','🫂')">🫂</span><span class="ep-btn" onclick="insertEm('s-prew2','💛')">💛</span><span class="ep-btn" onclick="insertEm('s-prew2','❤️')">❤️</span><span class="ep-btn" onclick="insertEm('s-prew2','💙')">💙</span><span class="ep-btn" onclick="insertEm('s-prew2','💚')">💚</span><span class="ep-btn" onclick="insertEm('s-prew2','💜')">💜</span></div><div class="ep-hint">Tap to add to the list above</div></div>
+    </div>
+  </details>
+
+  <details>
+    <summary>👫 Sibling Challenge Settings</summary>
+    <div class="set-body">
+      <div style="font-size:15px;font-weight:700;color:#aaaadd;margin-bottom:12px;line-height:1.7;">These challenges rotate randomly each day. Add your own or remove ones that don't fit your family.</div>
+      <label class="set-lbl">Sibling Challenge List (one per line)</label>
+      <textarea class="set-ta" id="s-sib-ch" rows="9"></textarea>
+      <div class="ep-wrap"><div class="ep-lbl">TAP AN EMOJI TO ADD IT</div><div class="ep-grid"><span class="ep-btn" onclick="insertEm('s-sib-ch','👩')">👩</span><span class="ep-btn" onclick="insertEm('s-sib-ch','👨')">👨</span><span class="ep-btn" onclick="insertEm('s-sib-ch','👧')">👧</span><span class="ep-btn" onclick="insertEm('s-sib-ch','👦')">👦</span><span class="ep-btn" onclick="insertEm('s-sib-ch','👶')">👶</span><span class="ep-btn" onclick="insertEm('s-sib-ch','👫')">👫</span><span class="ep-btn" onclick="insertEm('s-sib-ch','👨‍👩‍👧')">👨‍👩‍👧</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🤗')">🤗</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🤝')">🤝</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🫂')">🫂</span><span class="ep-btn" onclick="insertEm('s-sib-ch','💛')">💛</span><span class="ep-btn" onclick="insertEm('s-sib-ch','❤️')">❤️</span><span class="ep-btn" onclick="insertEm('s-sib-ch','💙')">💙</span><span class="ep-btn" onclick="insertEm('s-sib-ch','💚')">💚</span><span class="ep-btn" onclick="insertEm('s-sib-ch','💜')">💜</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎵')">🎵</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎬')">🎬</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎮')">🎮</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎲')">🎲</span><span class="ep-btn" onclick="insertEm('s-sib-ch','📖')">📖</span><span class="ep-btn" onclick="insertEm('s-sib-ch','📚')">📚</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎨')">🎨</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🏆')">🏆</span><span class="ep-btn" onclick="insertEm('s-sib-ch','⭐')">⭐</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🌟')">🌟</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎯')">🎯</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎪')">🎪</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎡')">🎡</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎠')">🎠</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🚀')">🚀</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🌈')">🌈</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎭')">🎭</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🏄')">🏄</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎤')">🎤</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎧')">🎧</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎺')">🎺</span><span class="ep-btn" onclick="insertEm('s-sib-ch','⚽')">⚽</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🏀')">🏀</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎸')">🎸</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎻')">🎻</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🏠')">🏠</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🛏️')">🛏️</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🛋️')">🛋️</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🏰')">🏰</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🧸')">🧸</span><span class="ep-btn" onclick="insertEm('s-sib-ch','📦')">📦</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🎒')">🎒</span><span class="ep-btn" onclick="insertEm('s-sib-ch','👕')">👕</span><span class="ep-btn" onclick="insertEm('s-sib-ch','👟')">👟</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🪥')">🪥</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🛁')">🛁</span><span class="ep-btn" onclick="insertEm('s-sib-ch','🪴')">🪴</span></div><div class="ep-hint">Tap to add to the list above</div></div>
+      <label class="set-lbl">How many completed challenges before a reward unlocks?</label>
+      <select class="set-sel" id="s-sib-thr">
+        <option value="2">2 challenges (easier - good for starting out)</option>
+        <option value="3" selected>3 challenges (default - balanced)</option>
+        <option value="4">4 challenges (a bit more build-up)</option>
+        <option value="5">5 challenges (more meaningful reward)</option>
+        <option value="7">7 challenges (one per week goal)</option>
+        <option value="10">10 challenges (long-term goal)</option>
+      </select>
+      <div class="set-hint">Higher number = more build-up before a reward. Keeps it feeling earned and special.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>⭐ Extra Special Moment Settings</summary>
+    <div class="set-body">
+      <div style="font-size:15px;font-weight:700;color:#aaaadd;margin-bottom:12px;line-height:1.7;">This is for when you witness something truly exceptional - kindness, honesty, helping without being asked. Only a parent marks this.</div>
+      <label class="set-lbl">How many moments before a reward unlocks?</label>
+      <select class="set-sel" id="s-es-thr">
+        <option value="3">3 moments (easier)</option>
+        <option value="5" selected>5 moments (default - balanced)</option>
+        <option value="7">7 moments (builds up over a week or two)</option>
+        <option value="10">10 moments (significant build-up)</option>
+        <option value="15">15 moments (long-term goal)</option>
+      </select>
+      <div class="set-hint">5 is a good starting point. Adjust based on how often you observe these moments.</div>
+    </div>
+  </details>
+
+  <details>
+    <summary>📈 Mastery Tracking Settings</summary>
+    <div class="set-body">
+      <div style="font-size:15px;font-weight:700;color:#aaaadd;margin-bottom:12px;line-height:1.7;">Mastery bars appear in the Parent Corner to show how consistently he is meeting each goal over time.</div>
+      <label class="set-lbl">Mastery percentage target</label>
+      <select class="set-sel" id="s-mast-thr">
+        <option value="60">60% - Showing solid progress</option>
+        <option value="70">70% - Mostly consistent</option>
+        <option value="80" selected>80% - Mastered (default)</option>
+        <option value="90">90% - Very high consistency</option>
+      </select>
+      <label class="set-lbl">How many days to measure?</label>
+      <select class="set-sel" id="s-mast-days">
+        <option value="7">7 days - This week</option>
+        <option value="14">14 days - Past two weeks</option>
+        <option value="30" selected>30 days - Past month (default)</option>
+        <option value="60">60 days - Past two months</option>
+      </select>
+      <div class="set-hint">30 days at 80% is a solid sign that the behavior has become a real habit.</div>
+    </div>
+  </details>
+
+  <button class="btn-block btn-em" onclick="saveSets()" style="margin-top:14px;border-color:var(--em) #021002 #021002 var(--em);">✓ SAVE ALL SETTINGS</button>
+  <div id="save-fb" style="display:none;text-align:center;font-size:18px;font-weight:900;color:var(--em);margin-top:12px;padding:14px;">✓ Settings saved!</div>
+
+  <div class="foot"><div class="foot-n">Sedrick Scott, M.S., Applied Behavioral Analysis</div><div class="foot-c">Using a trauma-informed, behavior-focused approach to support families</div></div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- PAGE: DAILY REWARD PICKER          -->
+<!-- ═══════════════════════════════════ -->
+<div class="pg" id="pg-daily">
+  <div class="nav"><div class="nav-logo">🏆 DAILY REWARD</div><button class="btn" onclick="go('pg-chart')">✕ Skip</button></div>
+  <div class="h1" style="font-size:12px;margin-bottom:8px;">What's your big goal today?</div>
+  <div class="sub" style="margin-bottom:18px;">Earn 10+ diamonds to unlock this!</div>
+  <div class="pk-g" id="pk-g"></div>
+</div>
+
+<script>
+
+const FEELS={
+  happy:{t:'You feel HAPPY! 😄',b:"That is so wonderful! What made you feel happy today? Tell someone about it!",s:'"I feel happy because ___."',big:false},
+  excited:{t:'You feel EXCITED! 🤩',b:"Wow, excitement is like fireworks inside your body! That energy is amazing. Take a big breath to channel it!",s:'"I feel so excited about ___!"',big:false},
+  proud:{t:'You feel PROUD! 😎',b:"You should feel really proud of yourself! Tell a grown-up what you did so they can celebrate with you!",s:'"I feel proud because I ___."',big:false},
+  calm:{t:'You feel CALM! 😌',b:"Calm is one of the most powerful feelings. Your body and mind feel peaceful right now. That is truly amazing!",s:'"I feel calm and ready to ___."',big:false},
+  silly:{t:'You feel SILLY! 🤪',b:"Silly feelings are so much fun! Let your silliness out in a kind way - laughter is the best!",s:'"I feel silly and I want to ___ with you!"',big:false},
+  loved:{t:'You feel LOVED! 🥰',b:"What a beautiful feeling. Someone cares about you so very much. You are so special!",s:'"I feel loved when ___."',big:false},
+  worried:{t:'You feel WORRIED! 😟',b:"It is completely okay to feel worried. Tell a grown-up - talking about it always helps worries feel smaller!",s:'"I feel worried about ___. Can you help me?"',big:true},
+  sad:{t:'You feel SAD! 😢',b:"Sad feelings are real and they matter very much. It is okay to feel sad. Would you like a hug?",s:'"I feel sad because ___. I need ___."',big:true},
+  frustrated:{t:'You feel FRUSTRATED! 😤',b:"Frustration means something felt really hard. That is such a tough feeling! Let's take a big breath together.",s:'"I feel frustrated because ___. Can we try ___?"',big:true},
+  scared:{t:'You feel SCARED! 😨',b:"Feeling scared is something everyone feels - even grown-ups! Tell a grown-up. You do not have to face it alone.",s:'"I feel scared of ___. Can you stay close to me?"',big:true},
+  tired:{t:'You feel TIRED! 😴',b:"Your body is sending you an important message - it needs rest! That is your body being really smart.",s:'"I feel really tired. I think I need ___."',big:true},
+  bored:{t:'You feel BORED! 😑',b:"Boredom means your brain is charged up and ready for something new! What sounds fun to you right now?",s:'"I feel bored. Can we do ___ together?"',big:false},
+};
+const EMO={happy:'😄',excited:'🤩',proud:'😎',calm:'😌',silly:'🤪',loved:'🥰',worried:'😟',sad:'😢',frustrated:'😤',scared:'😨',tired:'😴',bored:'😑'};
+const BEHS=[{"id": "dir", "ic": "\ud83d\udc42", "lb": "Listened and followed directions", "col": "#3a8a20", "desc": "I heard what a grown-up asked and I gave it a try \u2014 even if I didn't want to at first. I can always ask why or ask for help!"}, {"id": "saf", "ic": "\ud83e\uddba", "lb": "Stayed safe and close by", "col": "#9a7000", "desc": "I stayed where my grown-up could always see me. When I wanted to explore, I asked first before going."}, {"id": "hnd", "ic": "\ud83e\udd32", "lb": "Gentle hands and kind body", "col": "#aa3333", "desc": "My hands and body were for helping, hugging, and high-fives today. When I had big feelings, I used my words instead of my body."}, {"id": "clm", "ic": "\ud83e\uddd8", "lb": "Used my calm-down tools", "col": "#0a7060", "desc": "When I noticed a big feeling starting, I tried a calm-down tool \u2014 like breathing, asking for a hug, or going to my calm space."}];
+const PINFO=[
+  {n:'🌅 Morning',t:'6:30 AM – 8:30 AM',x:'Getting ready, breakfast & car ride'},
+  {n:'☀️ Midday',t:'3:00 PM – 5:30 PM',x:'After school, snack & homework'},
+  {n:'🌙 Evening',t:'5:30 PM – 8:30 PM',x:'Dinner, family time & bedtime'},
+];
+const DEF_PREW=[["\ud83c\udfb5 Pick our morning song", "\ud83d\udc55 You pick your outfit", "\ud83e\udd1d Special handshake before school", "\u2b50 Pick who gives the goodbye hug"], ["\u23f0 15 extra minutes of free play", "\ud83d\udcd6 Pick a book for quiet time", "\ud83c\udf33 Extra 10 minutes outside", "\ud83c\udfaf You pick this afternoon's activity"], ["\ud83d\udcda Pick tonight's bedtime story", "\ud83c\udfac You choose what we watch", "\u23f0 10 extra minutes before lights out", "\ud83c\udfb2 Pick a game after dinner"]];
+const DEF_DAILY=["\ud83d\udc69 Mommy Date", "\ud83d\udc68 Daddy Date", "\ud83c\udff0 Build a pillow fort", "\ud83c\udf7f Movie night \u2014 you pick!", "\ud83c\udfb2 Family game night", "\ud83c\udfb5 Be the family DJ", "\ud83d\udc6b Movie night + sibling picks too!"];
+const DEF_SIB=["Play together peacefully for 10 minutes", "Give each other a genuine compliment", "Share something without being asked", "Help each other with something today", "Make each other laugh in a kind way", "Do one nice thing for each other", "Tell each other one thing you love about them", "Clean up one spot together"];
+const SIB_REWS=["\ud83c\udfaa Family movie night \u2014 BOTH kids pick!", "\ud83c\udfb2 Family game night \u2014 BOTH kids pick!", "\ud83c\udf33 Family adventure outside together", "\ud83c\udf55 Build-your-own pizza night!"];
+const ES_REWS=["\ud83d\udc69 Mommy Date \u2014 walk, park, or library!", "\ud83d\udc68 Daddy Date \u2014 walk, park, or library!", "\ud83c\udf89 You plan tonight's family fun", "\ud83d\udc6b Special activity \u2014 sibling picks too!"];
+const COPING=[{"title": "\ud83c\udf2c\ufe0f Dragon Breaths", "steps": "Breathe IN slowly through your nose\u2026 1\u2026 2\u2026 3\u2026 4. Now breathe OUT slowly through your mouth\u2026 1\u2026 2\u2026 3\u2026 4. Repeat 3 times together. Feel your body slow down with each breath."}, {"title": "\ud83d\udd90\ufe0f 5-4-3-2-1 Grounding", "steps": "Name 5 things you can SEE right now. 4 things you can TOUCH. 3 things you can HEAR. 2 things you can SMELL. 1 thing you can TASTE. Take a slow breath after each one."}, {"title": "\ud83d\udcaa Squeeze & Release", "steps": "Make tight fists with both hands. Hold tight\u2026 1\u2026 2\u2026 3. Now open your hands wide and shake them out. Feel the difference! Repeat 3 times. Notice how much better your hands feel."}, {"title": "\ud83e\udd8b Butterfly Hug", "steps": "Cross your arms over your chest so each hand touches the opposite shoulder. Tap left, right, left, right slowly \u2014 like butterfly wings. Breathe slowly while you do it for 10 taps."}, {"title": "\ud83c\udfd4\ufe0f Happy Place", "steps": "Close your eyes. Picture a place that makes you feel safe and happy \u2014 real or made up. What do you see there? What sounds are there? Spend 30 seconds just being there in your mind."}, {"title": "\ud83e\udd81 Lion Breath", "steps": "Take a big breath in through your nose. Then open your mouth wide, stick out your tongue, and breathe out like a LION \u2014 haaaaah! This helps release big energy. Do it 4 times together."}, {"title": "\ud83e\udd38 Shake It Out", "steps": "Stand up and shake your hands fast \u2014 like flicking water off your fingertips. Then shake your arms, then your whole body! Shake for 20 seconds. Then stop and take a slow deep breath."}, {"title": "\ud83e\uddd8 Body Scan", "steps": "Close your eyes. Start at your feet \u2014 are they tight or relaxed? Move slowly up to your legs\u2026 tummy\u2026 chest\u2026 shoulders\u2026 face. Breathe into any tight spots and let them go soft."}, {"title": "\ud83d\udd22 Count Backward Together", "steps": "Take one big breath together. Now count backward from 20 slowly \u2014 say each number out loud together: 20\u2026 19\u2026 18\u2026 all the way to 1. Try to think only about the numbers."}, {"title": "\ud83d\udca7 Cool Water Check-In", "steps": "Walk to the sink together. Let him feel cool water on his hands for 30 seconds. Take three slow breaths while the water runs. This helps his nervous system reset quickly."}];
+const WORDS_DATA=[{"w": "Happy", "e": "\ud83d\ude04", "d": "Feeling really good and joyful inside", "s": "\"I feel happy when ___.\""}, {"w": "Frustrated", "e": "\ud83d\ude24", "d": "When something feels really hard or doesn't go your way", "s": "\"I feel frustrated because ___.\""}, {"w": "Empathy", "e": "\ud83e\udd17", "d": "Understanding how someone else feels", "s": "\"I think you feel ___ because ___.\""}, {"w": "Brave", "e": "\ud83d\udcaa", "d": "Trying something even when it feels scary", "s": "\"I am brave when I ___.\""}, {"w": "Grateful", "e": "\ud83d\ude4f", "d": "Feeling thankful for the good things in your life", "s": "\"I am grateful for ___.\""}, {"w": "Patient", "e": "\u23f3", "d": "Waiting calmly without getting upset", "s": "\"I am being patient by ___.\""}, {"w": "Kind", "e": "\ud83d\udc9b", "d": "Being gentle and caring toward others", "s": "\"I showed kindness when I ___.\""}, {"w": "Calm", "e": "\ud83d\ude0c", "d": "When your body and mind feel peaceful", "s": "\"I feel calm when ___.\""}, {"w": "Proud", "e": "\ud83d\ude0e", "d": "Feeling great about something you did", "s": "\"I feel proud because I ___.\""}, {"w": "Worried", "e": "\ud83d\ude1f", "d": "Feeling nervous about what might happen", "s": "\"I feel worried about ___.\""}, {"w": "Excited", "e": "\ud83e\udd29", "d": "Feeling really happy and full of energy", "s": "\"I feel excited about ___!\""}, {"w": "Disappointed", "e": "\ud83d\ude14", "d": "When something doesn't happen the way you hoped", "s": "\"I feel disappointed because ___.\""}, {"w": "Teamwork", "e": "\ud83e\udd1d", "d": "Working together with others", "s": "\"We showed teamwork when ___.\""}, {"w": "Respect", "e": "\ud83c\udf1f", "d": "Treating others the way you want to be treated", "s": "\"I showed respect when I ___.\""}, {"w": "Forgiveness", "e": "\ud83d\udc99", "d": "Letting go of being upset with someone", "s": "\"I forgive ___ because ___.\""}, {"w": "Caring", "e": "\ud83d\udc97", "d": "Showing others you love them through actions", "s": "\"I showed I care by ___.\""}, {"w": "Determined", "e": "\ud83c\udfc6", "d": "Keeping going even when things get hard", "s": "\"I am determined to ___.\""}, {"w": "Peaceful", "e": "\u262e\ufe0f", "d": "Feeling quiet and settled inside", "s": "\"I feel peaceful when ___.\""}, {"w": "Responsible", "e": "\ud83d\udccb", "d": "Taking care of things that are yours to do", "s": "\"I was responsible when I ___.\""}, {"w": "Curious", "e": "\ud83d\udd0d", "d": "Wanting to learn and explore new things", "s": "\"I am curious about ___.\""}];
+const PG=3,DG=10,WG=50;
+const DEF_SETS={hero:'My Hero',sib:'My Sibling',email:'',sibThr:3,esThr:5,mastThr:80,mastDays:30,daily:[...DEF_DAILY],sibCh:[...DEF_SIB],prew0:[...DEF_PREW[0]],prew1:[...DEF_PREW[1]],prew2:[...DEF_PREW[2]]};
+let S={},sets={},cDate=new Date(),aTab=0,pSpace=null;
+try{S=JSON.parse(localStorage.getItem('hc7')||'{}');}catch(e){}
+try{const x=JSON.parse(localStorage.getItem('hcs7')||'{}');sets=x&&x.hero?{...DEF_SETS,...x}:{...DEF_SETS};}catch(e){sets={...DEF_SETS};}
+const sv=()=>{try{localStorage.setItem('hc7',JSON.stringify(S));}catch(e){}};
+const svS=()=>{try{localStorage.setItem('hcs7',JSON.stringify(sets));}catch(e){}};
+const dk=(d)=>(d||cDate).toISOString().slice(0,10);
+const gd=(d)=>S[dk(d)]||{};
+const sd=(x,d)=>{S[dk(d)]=x;sv();};
+const pt=(day,p)=>BEHS.reduce((s,b)=>s+(day[p+'_'+b.id]?1:0),0);
+const gt=(day)=>[0,1,2].reduce((s,i)=>s+pt(day,i),0);
+
+function go(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));
+  var pg=document.getElementById(id);
+  if(pg) pg.classList.add('on');
+  window.scrollTo(0,0);
+  if(id==='pg-chart'){render();var cw=document.getElementById('calm-wrap');if(cw)cw.classList.remove('on');}
+  if(id==='pg-share')buildReport();
+  if(id==='pg-sets')loadSets();
+  if(id==='pg-parent')buildMastery();
+  if(id==='pg-sibling')renderSibling();
+}
+function home(){go('pg-home');}
+
+function loadSets(){
+  document.getElementById('sn').value=sets.hero||'';
+  document.getElementById('sb').value=sets.sib||'';
+  document.getElementById('se').value=sets.email||'';
+  document.getElementById('s-sib-thr').value=sets.sibThr||3;
+  document.getElementById('s-es-thr').value=sets.esThr||5;
+  document.getElementById('s-mast-thr').value=sets.mastThr||80;
+  document.getElementById('s-mast-days').value=sets.mastDays||30;
+  document.getElementById('s-daily').value=(sets.daily||DEF_DAILY).join('\n');
+  document.getElementById('s-sib-ch').value=(sets.sibCh||DEF_SIB).join('\n');
+  document.getElementById('s-prew0').value=(sets.prew0||DEF_PREW[0]).join('\n');
+  document.getElementById('s-prew1').value=(sets.prew1||DEF_PREW[1]).join('\n');
+  document.getElementById('s-prew2').value=(sets.prew2||DEF_PREW[2]).join('\n');
+}
+function saveSets(){
+  const pl=(id)=>document.getElementById(id).value.split('\n').map(x=>x.trim()).filter(x=>x);
+  sets.hero=document.getElementById('sn').value.trim()||'My Hero';
+  sets.sib=document.getElementById('sb').value.trim()||'My Sibling';
+  sets.email=document.getElementById('se').value.trim();
+  sets.sibThr=parseInt(document.getElementById('s-sib-thr').value)||3;
+  sets.esThr=parseInt(document.getElementById('s-es-thr').value)||5;
+  sets.mastThr=parseInt(document.getElementById('s-mast-thr').value)||80;
+  sets.mastDays=parseInt(document.getElementById('s-mast-days').value)||30;
+  sets.daily=pl('s-daily');sets.sibCh=pl('s-sib-ch');
+  sets.prew0=pl('s-prew0');sets.prew1=pl('s-prew1');sets.prew2=pl('s-prew2');
+  svS();
+  const fb=document.getElementById('save-fb');fb.style.display='block';setTimeout(()=>fb.style.display='none',2500);
+}
+
+function changeDay(d){const nd=new Date(cDate);nd.setDate(nd.getDate()+d);cDate=nd;render();}
+function setTab(i){aTab=i;render();}
+function tog(p,id){const day=gd();day[p+'_'+id]=!day[p+'_'+id];sd(day);render();}
+function wkTot(){
+  const d=new Date(cDate),dow=d.getDay(),m=new Date(d);
+  m.setDate(d.getDate()-((dow+6)%7));
+  let t=0;for(let i=0;i<7;i++){const nd=new Date(m);nd.setDate(m.getDate()+i);t+=gt(gd(nd));}return t;
+}
+function fmtDate(d){
+  const today=new Date();today.setHours(0,0,0,0);
+  const dt=new Date(d);dt.setHours(0,0,0,0);
+  const diff=Math.round((dt-today)/86400000);
+  const nm=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}).toUpperCase();
+  return diff===0?'TODAY - '+nm:diff===-1?'YESTERDAY - '+nm:diff===1?'TOMORROW - '+nm:nm;
+}
+function wDay(){
+  const s=new Date(cDate.getFullYear(),0,0);
+  const doy=Math.floor((cDate-s)/86400000);
+  const w=WORDS_DATA[doy%WORDS_DATA.length];
+  document.getElementById('w-em').textContent=w.e;
+  document.getElementById('w-wd').textContent=w.w;
+  document.getElementById('w-df').textContent=w.d;
+  document.getElementById('w-sy').textContent='Try saying: '+w.s;
+}
+
+// ── SIBLING CHALLENGE ──
+function renderSibling(){if(!document.getElementById('sib-ch'))return;
+  const day=gd();
+  const sibList=sets.sibCh&&sets.sibCh.length?sets.sibCh:DEF_SIB;
+  if(!day.sibCh){day.sibCh=sibList[Math.floor(Math.random()*sibList.length)];day.sibH=false;day.sibS=false;day.sibBankAdded=false;if(!day.sibBank)day.sibBank=0;sd(day);}
+  const thr=sets.sibThr||3,bank=day.sibBank||0,pct=Math.min(Math.round(bank/thr*100),100);
+  document.getElementById('sib-ch').textContent=day.sibCh;
+  document.getElementById('sib-bank-lbl').textContent=bank+' of '+thr+' challenges completed - keep going!';
+  document.getElementById('sib-bar').style.width=pct+'%';
+  document.getElementById('sib-count').textContent='💛 '+bank+' / '+thr+' completed';
+  const hb=document.getElementById('sib-he'),sb=document.getElementById('sib-she');
+  hb.className='sibbtn'+(day.sibH?' on':'');hb.textContent=day.sibH?'✓ He did it! 💎':'✓ He did it!';
+  const sibName=sets.sib||'Sibling';
+  sb.className='sibbtn'+(day.sibS?' on':'');sb.textContent=day.sibS?'✓ '+sibName+' did it too! 💎':'✓ '+sibName+' did it too!';
+  const rv=document.getElementById('sib-rew');
+  if(bank>=thr&&day.sibR>=0){rv.classList.add('on');document.getElementById('sib-rew-val').textContent=SIB_REWS[day.sibR];}
+  else rv.classList.remove('on');
+  // ES section
+  const esThr=sets.esThr||5,esBank=day.esBank||0,esPct=Math.min(Math.round(esBank/esThr*100),100);
+  document.getElementById('es-bank-lbl').textContent=esBank+' of '+esThr+' moments recorded - keep noticing!';
+  document.getElementById('es-bar').style.width=esPct+'%';
+  document.getElementById('es-count').textContent='⭐ '+esBank+' / '+esThr+' recorded';
+  const esRv=document.getElementById('es-rew');
+  if(esBank>=esThr&&day.esR>=0){esRv.classList.add('on');document.getElementById('es-rew-val').textContent=ES_REWS[day.esR];}
+  else esRv.classList.remove('on');
+}
+function markSib(who){
+  const day=gd();
+  if(who==='he')day.sibH=!day.sibH;
+  else day.sibS=!day.sibS;
+  // Only add to bank when both become true for the first time this challenge
+  if(day.sibH&&day.sibS&&!day.sibBankAdded){
+    day.sibBank=(day.sibBank||0)+1;
+    day.sibBankAdded=true;
+    if(day.sibBank>=(sets.sibThr||3)&&(day.sibR===undefined||day.sibR<0))day.sibR=Math.floor(Math.random()*SIB_REWS.length);
+  }
+  sd(day);renderSibling();
+}
+function newSib(){
+  const day=gd();
+  const sibList=sets.sibCh&&sets.sibCh.length?sets.sibCh:DEF_SIB;
+  day.sibCh=sibList[Math.floor(Math.random()*sibList.length)];
+  day.sibH=false;day.sibS=false;day.sibBankAdded=false;sd(day);renderSibling();
+}
+function addES(){
+  const day=gd();
+  day.esBank=(day.esBank||0)+1;
+  if(day.esBank>=(sets.esThr||5)&&(day.esR===undefined||day.esR<0))day.esR=Math.floor(Math.random()*ES_REWS.length);
+  sd(day);renderSibling();
+}
+function resetSibReward(){
+  const day=gd();day.sibR=-1;day.sibBank=0;sd(day);renderSibling();
+}
+function resetESReward(){
+  const day=gd();day.esR=-1;day.esBank=0;sd(day);renderSibling();
+}
+
+function render(){
+  var _dlbl=document.getElementById('dlbl');if(_dlbl)_dlbl.textContent=fmtDate(cDate);
+  wDay();
+  const day=gd(),dr=day.dR;
+  var _drv=document.getElementById('dr-val');if(_drv)_drv.textContent=dr||'Tap to pick your daily reward!';
+  var _drh=document.getElementById('dr-hint');if(_drh)_drh.textContent=dr?'Working toward this all day! 💪':'Earn 10+ diamonds to unlock it';
+  [0,1,2].forEach(i=>{
+    document.getElementById('ts'+i).textContent=pt(day,i)+'/4 💎';
+    document.getElementById('tab'+i).className='tab'+(i===aTab?' on':'');
+  });
+  buildPanel(day);buildSummary(day);
+  const total=gt(day),pct=Math.min(Math.round(total/12*100),100);
+  var _xpf=document.getElementById('xpf');if(_xpf)_xpf.style.width=pct+'%';
+  var _xpt=document.getElementById('xpt-txt');if(_xpt)_xpt.textContent=total+'/12 XP';
+  var _dtv=document.getElementById('dt-v');if(_dtv)_dtv.textContent=total+'/12 💎';
+  var _dtu=document.getElementById('dt-u');if(_dtu)_dtu.style.display=total>=DG?'block':'none';
+  const wk=wkTot(),wkp=Math.min(Math.round(wk/WG*100),100);
+  var _wkf=document.getElementById('wk-fill');if(_wkf)_wkf.style.width=wkp+'%';
+  var _wkt=document.getElementById('wk-txt');if(_wkt)_wkt.textContent='Earn 50 diamonds this week to unlock · '+wk+'/50';
+}
+function getPR(p){const c=[sets.prew0,sets.prew1,sets.prew2];return c[p]&&c[p].length?c[p]:DEF_PREW[p];}
+function buildPanel(day){
+  const pi=PINFO[aTab],rew=day['p'+aTab+'_r'],feel=day['p'+aTab+'_f'],p=pt(day,aTab);
+  let h=`<div class="pphead"><div class="pp-t">${pi.n}</div><div class="pp-tm">${pi.t}</div><div class="pp-x">${pi.x}</div></div>`;
+  if(!rew){
+    h+=`<div class="sb sb1">⭐ STEP 1 - PICK YOUR REWARD!<br>What are you working for today?</div><div class="rg">`;
+    getPR(aTab).forEach((r,i)=>{const ic=r.split(' ')[0],lb=r.split(' ').slice(1).join(' ')||r;h+=`<div class="rbtn" onclick="pickRew(${aTab},${i})"><span class="ric">${ic}</span><span class="rlb">${lb}</span></div>`;});
+    h+=`</div>`;h+=goalPreview(day,true);
+  }else if(!feel){
+    h+=`<div class="wfb"><span class="wfb-ico">🎯</span><div><div class="wfb-l">WORKING FOR:</div><div class="wfb-v">${rew}</div></div></div>`;
+    h+=`<div class="sb sb2">💙 STEP 2 - HOW ARE YOU FEELING RIGHT NOW?<br>All feelings are okay! 💛</div><div class="fg">`;
+    [{f:'happy',e:'😄',n:'Happy'},{f:'excited',e:'🤩',n:'Excited'},{f:'proud',e:'😎',n:'Proud'},{f:'calm',e:'😌',n:'Calm'},{f:'silly',e:'🤪',n:'Silly'},{f:'loved',e:'🥰',n:'Loved'},{f:'worried',e:'😟',n:'Worried'},{f:'sad',e:'😢',n:'Sad'},{f:'frustrated',e:'😤',n:'Frustrated'},{f:'scared',e:'😨',n:'Scared'},{f:'tired',e:'😴',n:'Tired'},{f:'bored',e:'😑',n:'Bored'}].forEach(fe=>{h+=`<div class="fbtn" onclick="pickFeel('${fe.f}',${aTab})"><span class="fem">${fe.e}</span><span class="fnm">${fe.n}</span></div>`;});
+    h+=`</div><div class="fresp" id="fr-${aTab}"></div>`;h+=goalPreview(day,true);
+  }else{
+    h+=`<div class="fbadge"><span class="fbadge-e">${EMO[feel]||'😊'}</span><div><div class="fbadge-l">FEELING RIGHT NOW:</div><div class="fbadge-v">${feel.charAt(0).toUpperCase()+feel.slice(1)}</div><div class="fbadge-c" onclick="resetP(${aTab})">Tap to change ↺</div></div></div>`;
+    h+=`<div class="wfb"><span class="wfb-ico">🎯</span><div><div class="wfb-l">WORKING FOR:</div><div class="wfb-v">${rew}</div></div></div>`;
+    h+=`<div class="sb sb3">💎 STEP 3 - TAP EACH GOAL YOU EARNED!<br>Only tap it if you really did it today!</div>`;
+    BEHS.forEach(b=>{const on=!!day[aTab+'_'+b.id];h+=`<button class="beh${on?' on':''}" onclick="tog(${aTab},'${b.id}')"><div class="beh-top"><div class="bbar" style="background:${b.col};height:50px;"></div><span class="bic">${b.ic}</span><span class="blb">${b.lb}</span><span class="bgem">${on?'💎':'<span style=\"opacity:.25;font-size:22px\">◇</span>'}</span></div><div class="beh-d" style="border-color:${b.col};">${b.desc}</div></button>`;});
+    const ul=p>=PG;
+    h+=`<div class="rstrip ${ul?'rs-ul':'rs-lk'}">${ul?'🎉 Reward unlocked! You are amazing! 🎉':'💎 '+(PG-p)+' more diamond'+(PG-p!==1?'s':'')+' needed to unlock!'}</div>`;
+    if(FEELS[feel]&&FEELS[feel].big)h+=`<div style="margin-top:12px;"><button class="btn btn-di" onclick="toggleCalm()" style="width:100%;padding:14px;font-size:9px;line-height:1.8;">🧘 Open Calm-Down Tools</button></div>`;
+  }
+  var _pp=document.getElementById('pp');if(_pp)_pp.innerHTML=h;
+}
+function goalPreview(day,locked){
+  let h=`<div class="gprv"><div class="gprv-hd">🔒 YOUR 4 HERO GOALS - Complete Steps 1 &amp; 2 above to unlock!</div>`;
+  BEHS.forEach(b=>{h+=`<div class="gprv-row"><div class="gprv-bar" style="background:${b.col};height:44px;"></div><span class="gprv-ic">${b.ic}</span><div class="gprv-tx"><div class="gprv-lb">${b.lb}</div><div class="gprv-ds">${b.desc}</div></div><span class="gprv-gm">◇</span></div>`;});
+  return h+`</div>`;
+}
+function pickRew(p,i){const r=getPR(p)[i]||'';const day=gd();day['p'+p+'_r']=r;sd(day);render();}
+function pickFeel(f,p){
+  const day=gd();day['p'+p+'_f']=f;sd(day);
+  const fl=FEELS[f],el=document.getElementById('fr-'+p);
+  if(!el){render();return;}
+  el.classList.add('on');
+  el.innerHTML=`<div class="fr-t">${fl.t}</div><div class="fr-b">${fl.b}</div><div class="fr-s">Try saying: ${fl.s}</div><button class="fr-btn" onclick="render()">✓ Got it! Now let's earn diamonds! →</button>`;
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function resetP(p){const day=gd();delete day['p'+p+'_f'];delete day['p'+p+'_r'];sd(day);render();}
+function buildSummary(day){
+  const w=document.getElementById('sumrow');w.innerHTML='';
+  [0,1,2].forEach(i=>{const p=pt(day,i),ul=p>=PG,el=document.createElement('div');el.className='sum-cell'+(ul?' on':'');el.innerHTML=`<div class="sum-n">${['MORNING','MIDDAY','EVENING'][i]}</div><div class="sum-g">${ul?'🎉':p+'/3'}</div><div class="sum-s">${ul?'Done! ✓':'Keep going'}</div>`;w.appendChild(el);});
+}
+function buildMastery(){
+  const thr=(sets.mastThr||80)/100,days=sets.mastDays||30,today=new Date(cDate);
+  let h='';
+  BEHS.forEach(b=>{
+    let earned=0,possible=0;
+    for(let i=0;i<days;i++){const d=new Date(today);d.setDate(today.getDate()-i);const day=gd(d);[0,1,2].forEach(p=>{possible++;if(day[p+'_'+b.id])earned++;});}
+    const pct=possible>0?Math.round(earned/possible*100):0;
+    const col=pct/100>=thr?'var(--em)':pct>50?'var(--gold)':'#5555aa';
+    h+=`<div class="mrow"><div class="mrow-lbl"><span class="mrow-n">${b.ic} ${b.lb}</span><span class="mrow-p">${pct}%</span></div>`;
+    h+=`<div class="mrow-track"><div class="mrow-fill" style="width:${pct}%;background:${col};"></div></div>`;
+    if(pct/100>=thr)h+=`<div class="mrow-done">⭐ MASTERED! ${days}-day average at ${pct}% - above the ${Math.round(thr*100)}% goal! Great work!</div>`;
+    h+=`</div>`;
+  });
+  document.getElementById('mastery-content').innerHTML=h||'<div style="font-size:16px;font-weight:700;color:#7777aa;">No data yet - start using the chart daily and check back in a week!</div>';
+}
+function pickDaily(){
+  const daily=sets.daily&&sets.daily.length?sets.daily:DEF_DAILY;
+  let h='';
+  daily.forEach((r,i)=>{const fam=r.includes('👫')||r.toLowerCase().includes('sibling');const ic=r.split(' ')[0];const lb=r.split(' ').slice(1).join(' ')||r;h+=`<div class="pk-btn${fam?' fam':''}" onclick="confDaily(${i})"><span class="pk-ic">${ic}</span><span class="pk-lb">${lb}</span>${fam?'<span class="pk-fam">👫 whole family!</span>':''}</div>`;});
+  document.getElementById('pk-g').innerHTML=h;go('pg-daily');
+}
+function confDaily(i){const daily=sets.daily&&sets.daily.length?sets.daily:DEF_DAILY;const day=gd();day.dR=daily[i];sd(day);go('pg-chart');}
+function toggleCalm(){
+  const w=document.getElementById('calm-wrap');w.classList.toggle('on');
+  if(w.classList.contains('on'))w.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.ctool').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.spbtn').forEach(b=>b.classList.remove('on','no'));
+  document.getElementById('avchk').style.display='none';document.getElementById('spmsg').style.display='none';pSpace=null;
+}
+function pickTool(el){document.querySelectorAll('.ctool').forEach(b=>b.classList.remove('on'));el.classList.add('on');const day=gd();day['p'+aTab+'_t']=el.querySelector('.ctool-l').textContent;sd(day);}
+function trySpace(el){if(el.classList.contains('no'))return;pSpace=el;document.getElementById('avq').textContent='Is your '+el.dataset.sp+' free right now?';document.getElementById('avchk').style.display='block';}
+function spYes(){if(!pSpace)return;document.querySelectorAll('.spbtn').forEach(b=>b.classList.remove('on'));pSpace.classList.add('on');const day=gd();day['p'+aTab+'_sp']=pSpace.dataset.sp;sd(day);document.getElementById('avchk').style.display='none';const m=document.getElementById('spmsg');m.textContent="Great! Let's go to "+pSpace.dataset.sp+". Take all the time you need. 💙";m.style.display='block';pSpace=null;}
+function spNo(){if(!pSpace)return;pSpace.classList.add('no');document.getElementById('avchk').style.display='none';const m=document.getElementById('spmsg');m.textContent="No problem - let's find another space! 💛";m.style.display='block';setTimeout(()=>m.style.display='none',2500);pSpace=null;}
+function markSkill(btn){btn.textContent='⭐ PRACTICED TODAY! Way to go!';btn.style.color='var(--em)';btn.style.borderColor='var(--em)';btn.disabled=true;}
+function resetDay(){if(confirm('Reset all diamonds for today?')){sd({});render();}}
+function buildReport(){
+  const day=gd(),total=gt(day),nm=sets.hero;
+  const ds=cDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  let r='🏆 HERO CHART REPORT\nHero: '+nm+'\nDate: '+ds+'\n──────────────────────\n\n';
+  [0,1,2].forEach(i=>{const p=pt(day,i),fl=day['p'+i+'_f'],rw=day['p'+i+'_r'];r+=PINFO[i].n+' ('+PINFO[i].t+')\n';if(rw)r+='Working for: '+rw+'\n';r+='Diamonds: '+p+'/4'+(p>=PG?' ✅ REWARD EARNED!':'')+' \n';BEHS.forEach(b=>r+=(day[i+'_'+b.id]?'💎':'◇')+' '+b.lb+'\n');if(fl)r+='Feeling: '+(EMO[fl]||'')+' '+fl.charAt(0).toUpperCase()+fl.slice(1)+'\n';if(day['p'+i+'_t'])r+='Calm tool: '+day['p'+i+'_t']+'\n';if(day['p'+i+'_sp'])r+='Calm space: '+day['p'+i+'_sp']+'\n';r+='\n';});
+  r+='──────────────────────\nTotal: '+total+'/12 💎\n';
+  if(total>=DG){r+='🏆 DAILY REWARD EARNED!\n';if(day.dR)r+='Working for: '+day.dR+'\n';}
+  r+='\nGreat job today, '+nm+'! 💎\n──────────────────────\nDesigned by Sedrick Scott, M.S., Applied Behavioral Analysis, ABA\nTrauma-Informed Care · Restorative Practices';
+  document.getElementById('shrpt').textContent=r;
+  const sub=encodeURIComponent('Hero Chart - '+nm+' - '+ds),body=encodeURIComponent(r);
+  document.getElementById('gmailbtn').onclick=()=>{if(!sets.email){alert('Please add a parent email in Settings first (tap ⚙ on the chart page).');return;}window.location.href='mailto:'+sets.email+'?subject='+sub+'&body='+body;};
+}
+function copyReport(){
+  const t=document.getElementById('shrpt').textContent;
+  const done=()=>{const c=document.getElementById('cpconf');c.style.display='block';setTimeout(()=>c.style.display='none',2500);};
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(done);
+  else{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);done();}
+}
+function showCoping(){
+  const c=COPING[Math.floor(Math.random()*COPING.length)];
+  document.getElementById('cop-title').textContent=c.title;
+  document.getElementById('cop-body').textContent=c.steps;
+  document.getElementById('cop-ov').classList.add('on');
+}
+function closeCoping(){document.getElementById('cop-ov').classList.remove('on');}
+
+
+
+
+function insertEm(id, em) {
+  var ta = document.getElementById(id);
+  if (!ta) return;
+  var cur = ta.value;
+  var pos = ta.selectionStart || cur.length;
+  // Find start of current line
+  var lineStart = cur.lastIndexOf('\n', pos - 1) + 1;
+  var lineText = cur.slice(lineStart, pos);
+  // If line is empty or just whitespace, start new line with emoji
+  if (lineText.trim() === '') {
+    ta.value = cur.slice(0, lineStart) + em + ' ' + cur.slice(pos);
+    var newPos = lineStart + em.length + 1;
+    ta.setSelectionRange(newPos, newPos);
+  } else {
+    // Append emoji + space then newline ready for label
+    var insert = ' ' + em + ' ';
+    ta.value = cur.slice(0, pos) + insert + cur.slice(pos);
+    var newPos2 = pos + insert.length;
+    ta.setSelectionRange(newPos2, newPos2);
+  }
+  ta.focus();
+}
+
+
+const SCHOOL_PERIODS=[
+  {n:'🌅 Morning Block',t:'8:20 AM - 11:25 AM',x:'Breakfast, Soft Start, Opening, Heggerty, HMH, Literacy Centers, OG, Writing'},
+  {n:'☀️ Midday Block',t:'11:25 AM - 1:40 PM',x:'Recess, Lunch, W.I.N., Math, Snack/Recess'},
+  {n:'🏫 Afternoon Block',t:'1:40 PM - 3:50 PM',x:'Specials, Pack Up, Dismissal'},
+];
+const SCHOOL_REWS=[
+  [{ic:'🪑',lb:'Choose your seat for morning meeting'},{ic:'⭐',lb:'Be the class helper this activity'},{ic:'🤝',lb:'Pick a partner to work with'},{ic:'🖍️',lb:'First to choose your center spot'}],
+  [{ic:'🌳',lb:'Choose what to do last 3 min of recess'},{ic:'🍱',lb:'Sit next to a friend at lunch'},{ic:'🎯',lb:'Pick the game during W.I.N. time'},{ic:'📖',lb:'Choose your spot during read-aloud'}],
+  [{ic:'🙋',lb:'Help the teacher hand out materials'},{ic:'🏃',lb:'First in line for dismissal'},{ic:'🎉',lb:'Choose a brain break for the class'},{ic:'✋',lb:'High-five the teacher and share one win'}],
+];
+const SCHOOL_DAILY=['📝 Good day note sent home to family','🌟 Choose tomorrows morning job','🎯 Pick a class activity for tomorrow','📖 First to pick a book from the library cart','⭐ Special helper badge for the day','🎨 Free choice during an activity'];
+const SCHOOL_SCHEDULE=[{t:'8:20',n:'Breakfast'},{t:'8:40',n:'Soft Start'},{t:'8:50',n:'Opening (Crew Greeting)'},{t:'9:00',n:'Heggerty'},{t:'9:10',n:'HMH Whole Group'},{t:'9:30',n:'Literacy Centers'},{t:'10:10',n:'OG'},{t:'10:50',n:'Writing'},{t:'11:25',n:'Recess'},{t:'11:45',n:'Lunch'},{t:'12:15',n:'W.I.N.'},{t:'12:40',n:'Math'},{t:'1:40',n:'Snack / Recess'},{t:'2:00',n:'Specials'},{t:'3:45',n:'Pack Up / Dismissal'}];
+
+let sMode=localStorage.getItem('hc7-mode')||'';
+let sTab=0;
+
+function chooseMode(m){sMode=m;localStorage.setItem('hc7-mode',m);if(m==='home'){go('pg-home');render();const today=dk();if(localStorage.getItem('hc7-cop')!==today){localStorage.setItem('hc7-cop',today);setTimeout(showCoping,1000);}}else{go('pg-school');}}
+function goSchool(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));var pg=document.getElementById(id);if(pg)pg.classList.add('on');window.scrollTo(0,0);if(id==='pg-school-chart')setTimeout(renderSchool,0);if(id==='pg-school-share')setTimeout(buildSchoolReport,0);}
+function setSTab(i){sTab=i;renderSchool();}
+function togS(p,id){const day=gd();const key='sc_'+p+'_'+id;day[key]=!day[key];sd(day);renderSchool();}
+function spt(day,p){return BEHS.reduce((s,b)=>s+(day['sc_'+p+'_'+b.id]?1:0),0);}
+function sgt(day){return[0,1,2].reduce((s,i)=>s+spt(day,i),0);}
+function _se(id){return document.getElementById(id);}
+function _st(id,val){var el=_se(id);if(el)el.textContent=val;}
+function _ss(id,prop,val){var el=_se(id);if(el)el.style[prop]=val;}
+function renderSchool(){if(!document.getElementById('spp'))return;
+  const day=gd();
+  _st('sdlbl',fmtDate(cDate));
+  if(_se('sched-items'))buildScheduleStrip();
+  const sdr=day.sdR;
+  _st('sdr-val',sdr||'Tap to pick the school daily reward!');
+  _st('sdr-hint',sdr?'Working toward this today! Keep going!':'Earn 10+ diamonds to unlock it');
+  [0,1,2].forEach(i=>{_st('sts'+i,spt(day,i)+'/4 💎');var t=_se('stab'+i);if(t)t.className='tab'+(i===sTab?' sch-on':'');});
+  if(_se('spp'))buildSchoolPanel(day);
+  if(_se('ssumrow'))buildSchoolSummary(day);
+  const total=sgt(day),pct=Math.min(Math.round(total/12*100),100);
+  _ss('sxpf','width',pct+'%');
+  _st('sxpt',total+'/12 XP');
+  _st('sdt-v',total+'/12 💎');
+  var dtu=_se('sdt-u');if(dtu)dtu.style.display=total>=DG?'block':'none';
+}
+function buildScheduleStrip(){
+  const now=new Date();const nowMin=now.getHours()*60+now.getMinutes();
+  const toMin=t=>{const[h,m]=t.split(':').map(Number);return h*60+(m||0);};
+  let h='';
+  SCHOOL_SCHEDULE.forEach((item,i)=>{
+    const start=toMin(item.t);const end=i<SCHOOL_SCHEDULE.length-1?toMin(SCHOOL_SCHEDULE[i+1].t):start+20;
+    const cur=nowMin>=start&&nowMin<end;
+    h+='<div class="sched-item'+(cur?' now':'')+'"><span class="sched-time">'+item.t+'</span><span class="sched-name">'+(cur?'▶ ':'')+item.n+'</span></div>';
+  });
+  document.getElementById('sched-items').innerHTML=h;
+}
+function buildSchoolPanel(day){
+  const pi=SCHOOL_PERIODS[sTab],rew=day['sp'+sTab+'_r'],feel=day['sp'+sTab+'_f'],p=spt(day,sTab);
+  const savedTeacher=day['sp'+sTab+'_teacher']||'';
+  const savedNotes=day['sp'+sTab+'_notes']||'';
+  const SCLASSES={0:[['8:20','Breakfast'],['8:40','Soft Start'],['8:50','Opening'],['9:00','Heggerty'],['9:10','HMH Whole Group'],['9:30','Literacy Centers'],['10:10','OG'],['10:50','Writing']],1:[['11:25','Recess'],['11:45','Lunch'],['12:15','W.I.N.'],['12:40','Math'],['1:40','Snack/Recess']],2:[['2:00','Specials'],['3:45','Pack Up'],['3:50','Dismissal']]};
+  const now=new Date();const nowMin=now.getHours()*60+now.getMinutes();
+  const toMin=t=>{const p=t.split(':');return parseInt(p[0])*60+parseInt(p[1]||0);};
+
+  let h='<div class="pphead"><div class="pp-t">'+pi.n+'</div><div class="pp-tm">'+pi.t+'</div></div>';
+
+  // Classes in this block
+  h+='<div class="sch-classes"><div class="sch-cls-title">CLASSES IN THIS BLOCK</div><div class="sch-cls-list">';
+  const classes=SCLASSES[sTab]||[];
+  classes.forEach((cls,i)=>{
+    const start=toMin(cls[0]);
+    const end=i<classes.length-1?toMin(classes[i+1][0]):start+30;
+    const isCur=nowMin>=start&&nowMin<end;
+    h+='<span class="sch-cls-item'+(isCur?' now':'')+'">'+(isCur?'▶ ':'')+cls[0]+' '+cls[1]+'</span>';
+  });
+  h+='</div></div>';
+
+  // Teacher name
+  h+='<div class="sch-teacher"><div class="sch-teacher-lbl">TEACHER / STAFF RECORDING THIS</div>';
+  h+='<input class="sch-teacher-inp" type="text" placeholder="Your name..." value="'+savedTeacher.replace(/"/g,'&quot;')+'" onchange="saveTeacher('+sTab+',this.value)" oninput="saveTeacher('+sTab+',this.value)"></div>';
+
+  if(!rew){
+    h+='<div class="sch-step-badge sch-sb1">⭐ STEP 1 - PICK THE BLOCK REWARD<br>What is he working for this block?</div>';
+    h+='<div class="rg">';
+    SCHOOL_REWS[sTab].forEach((r,i)=>{h+='<div class="rbtn" style="padding:10px 8px;" onclick="pickSRew('+sTab+','+i+')"><span class="ric" style="font-size:22px;">'+r.ic+'</span><span class="rlb" style="font-size:13px;">'+r.lb+'</span></div>';});
+    h+='</div>';
+  }else if(!feel){
+    h+='<div class="sch-reward-btn" onclick="resetSP('+sTab+')"><div class="sch-reward-lbl">WORKING FOR THIS BLOCK:</div><div class="sch-reward-val">'+rew+'</div><div style="font-size:12px;color:#5a7a4a;margin-top:3px;">Tap to change</div></div>';
+    h+='<div class="sch-step-badge sch-sb2">💙 STEP 2 - CHECK IN ON FEELINGS<br>Do this WITH him at the start of the block!</div>';
+    h+='<div class="fg" style="grid-template-columns:repeat(4,1fr);">';
+    [{f:'happy',e:'😄',n:'Happy'},{f:'excited',e:'🤩',n:'Excited'},{f:'proud',e:'😎',n:'Proud'},{f:'calm',e:'😌',n:'Calm'},{f:'worried',e:'😟',n:'Worried'},{f:'sad',e:'😢',n:'Sad'},{f:'frustrated',e:'😤',n:'Frustrated'},{f:'tired',e:'😴',n:'Tired'}].forEach(fe=>{
+      h+='<div class="fbtn" style="padding:8px 4px;" onclick="pickSFeel(\''+fe.f+'\','+sTab+')"><span class="fem" style="font-size:22px;">'+fe.e+'</span><span class="fnm" style="font-size:12px;">'+fe.n+'</span></div>';
+    });
+    h+='</div><div class="fresp" id="sfr-'+sTab+'"></div>';
+  }else{
+    h+='<div class="sch-reward-btn" onclick="resetSP('+sTab+')"><div class="sch-reward-lbl">WORKING FOR THIS BLOCK:</div><div class="sch-reward-val">'+rew+'</div><div style="font-size:12px;color:#5a7a4a;margin-top:3px;">Tap to change</div></div>';
+    h+='<div style="display:flex;align-items:center;gap:8px;background:#0e0e28;border:2px solid #2a2a66;border-radius:3px;padding:8px 12px;margin-bottom:10px;"><span style="font-size:22px;">'+(EMO[feel]||'😊')+'</span><div><div style="font-family:var(--G);font-size:6px;color:#5555aa;margin-bottom:2px;">FEELING AT START:</div><div style="font-size:14px;font-weight:800;color:#fff;">'+feel.charAt(0).toUpperCase()+feel.slice(1)+'</div></div><div style="margin-left:auto;font-size:12px;color:#444;cursor:pointer;" onclick="resetSP('+sTab+')">Change</div></div>';
+
+    h+='<div class="sch-step-badge sch-sb3">💎 STEP 3 - RECORD DIAMONDS AT END OF BLOCK<br>Go through each goal WITH him. Only check off what he actually did.</div>';
+    h+='<div class="sch-diamonds-compact">';
+    BEHS.forEach(b=>{
+      const on=!!day['sc_'+sTab+'_'+b.id];
+      h+='<button class="scd-btn'+(on?' on':'')+'" onclick="togS('+sTab+',\''+b.id+'\')">';
+      h+='<div class="scd-bar" style="background:'+b.col+';"></div>';
+      h+='<span class="scd-ic">'+b.ic+'</span>';
+      h+='<span class="scd-lbl">'+b.lb+'</span>';
+      h+='<span class="scd-gem">'+(on?'💎':'<span style="opacity:.25;">◇</span>')+'</span>';
+      h+='</button>';
+    });
+    h+='</div>';
+
+    const ul=p>=PG;
+    h+='<div class="sch-rstrip '+(ul?'sch-rs-ul':'sch-rs-lk')+'">'+(ul?'🎉 Block reward unlocked! Great job!':'Need '+(PG-p)+' more diamond'+(PG-p!==1?'s':'')+' to unlock')+'</div>';
+
+    // Notes
+    h+='<div class="sch-notes"><div class="sch-notes-lbl">TEACHER NOTES (optional - give context for any diamond not earned)</div>';
+    h+='<textarea class="sch-notes-ta" placeholder="What happened this block? Any patterns to note? What worked or needed more support?" onchange="saveNotes('+sTab+',this.value)" oninput="saveNotes('+sTab+',this.value)">'+savedNotes.replace(/</g,'&lt;')+'</textarea></div>';
+  }
+
+  document.getElementById('spp').innerHTML=h;
+}
+function saveTeacher(p,v){const day=gd();day['sp'+p+'_teacher']=v;sd(day);}
+function saveNotes(p,v){const day=gd();day['sp'+p+'_notes']=v;sd(day);}
+
+function pickSRew(p,i){const r=SCHOOL_REWS[p][i];const day=gd();day['sp'+p+'_r']=r.ic+' '+r.lb;sd(day);renderSchool();}
+function pickSFeel(f,p){const day=gd();day['sp'+p+'_f']=f;sd(day);const fl=FEELS[f],el=document.getElementById('sfr-'+p);if(!el){renderSchool();return;}el.classList.add('on');el.innerHTML='<div class="fr-t">'+fl.t+'</div><div class="fr-b">'+fl.b+'</div><div class="fr-s">Try saying: '+fl.s+'</div><button class="fr-btn" onclick="renderSchool()">Got it! Now let\'s earn diamonds! →</button>';el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function resetSP(p){const day=gd();delete day['sp'+p+'_f'];delete day['sp'+p+'_r'];sd(day);renderSchool();}
+function buildSchoolSummary(day){const w=document.getElementById('ssumrow');w.innerHTML='';[0,1,2].forEach(i=>{const p=spt(day,i),ul=p>=PG,el=document.createElement('div');el.className='sum-cell'+(ul?' on':'');el.innerHTML='<div class="sum-n">'+['MORNING','MIDDAY','AFTERNOON'][i]+'</div><div class="sum-g">'+(ul?'🎉':p+'/3')+'</div><div class="sum-s">'+(ul?'Done! ✓':'Keep going')+'</div>';w.appendChild(el);});}
+function pickSDaily(){let h='';SCHOOL_DAILY.forEach((r,i)=>{const ic=r.split(' ')[0];const lb=r.split(' ').slice(1).join(' ');h+='<div class="pk-btn" onclick="confSDaily('+i+')"><span class="pk-ic">'+ic+'</span><span class="pk-lb">'+lb+'</span></div>';});document.getElementById('spk-g').innerHTML=h;goSchool('pg-school-daily');}
+function confSDaily(i){const day=gd();day.sdR=SCHOOL_DAILY[i];sd(day);goSchool('pg-school-chart');}
+function buildSchoolReport(){
+  const day=gd(),total=sgt(day),nm=sets.hero||'My Hero';
+  const ds=cDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  let r='SCHOOL HERO CHART\nHero: '+nm+'\nDate: '+ds+'\n-------------------------------\n\n';
+  [0,1,2].forEach(i=>{
+    const p=spt(day,i),fl=day['sp'+i+'_f'],rw=day['sp'+i+'_r'];
+    const tc=day['sp'+i+'_teacher'],nt=day['sp'+i+'_notes'];
+    r+=SCHOOL_PERIODS[i].n+' ('+SCHOOL_PERIODS[i].t+')\n';
+    if(tc)r+='Recorded by: '+tc+'\n';
+    if(rw)r+='Working for: '+rw+'\n';
+    r+='Diamonds: '+p+'/4'+(p>=PG?' - REWARD EARNED!':'')+' \n';
+    BEHS.forEach(b=>r+=(day['sc_'+i+'_'+b.id]?'💎':'◇')+' '+b.lb+'\n');
+    if(fl)r+='Feeling at start: '+(EMO[fl]||'')+' '+fl.charAt(0).toUpperCase()+fl.slice(1)+'\n';
+    if(nt&&nt.trim())r+='Notes: '+nt.trim()+'\n';
+    r+='\n';
+  });
+  r+='-------------------------------\nTotal school diamonds: '+total+'/12\n';
+  if(total>=DG){r+='SCHOOL DAILY REWARD EARNED!\n';if(day.sdR)r+='Working for: '+day.sdR+'\n';}
+  r+='\nSedrick Scott, M.S., Applied Behavioral Analysis\nUsing a trauma-informed, behavior-focused approach to support families';
+  document.getElementById('s-shrpt').textContent=r;
+  const sub=encodeURIComponent('School Hero Chart - '+nm+' - '+ds);
+  const body=encodeURIComponent(r);
+  document.getElementById('s-gmailbtn').onclick=()=>{if(!sets.email){alert('Please add an email address in Settings first. Tap ⚙ from the home chart page.');return;}window.location.href='mailto:'+sets.email+'?subject='+sub+'&body='+body;};
+}
+
+function sCopyReport(){const t=document.getElementById('s-shrpt').textContent;const done=()=>{const c=document.getElementById('s-cpconf');c.style.display='block';setTimeout(()=>c.style.display='none',2500);};if(navigator.clipboard)navigator.clipboard.writeText(t).then(done);else{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);done();}}
+
+// Route on load based on saved mode
+document.addEventListener('DOMContentLoaded', function() {
+  if(sMode==='home'){go('pg-home');render();const today=dk();if(localStorage.getItem('hc7-cop')!==today){localStorage.setItem('hc7-cop',today);setTimeout(showCoping,1200);}}
+  else if(sMode==='school'){go('pg-school');}
+  // else stays on pg-start (default)
+});
+
+</script>
+
+<!-- ═══ LANDING ═══ -->
+<div class="pg on" id="pg-start">
+  <div class="start-wrap">
+    <div class="start-logo">⛏ HERO CHART ⛏</div>
+    <div class="start-sub">Where are we right now?</div>
+    <div class="start-grid">
+      <div class="start-card sc-home" onclick="chooseMode('home')">
+        <span class="sc-ic">🏠</span>
+        <div class="sc-title">HOME</div>
+        <div class="sc-desc">Family chart, rewards and challenges</div>
+      </div>
+      <div class="start-card sc-sch" onclick="chooseMode('school')">
+        <span class="sc-ic">🏫</span>
+        <div class="sc-title">SCHOOL</div>
+        <div class="sc-desc">Kindergarten schedule and school goals</div>
+      </div>
+    </div>
+    <div class="start-note">This tool works best alongside the child's school team and any therapists or specialists he is working with. It is meant to add support, not replace professional guidance.</div>
+  </div>
+</div>
+
+<!-- ═══ SCHOOL HUB ═══ -->
+<div class="pg" id="pg-school">
+  <div class="nav">
+    <div class="nav-logo" style="color:var(--dia);">🏫 SCHOOL<span class="school-badge">SCHOOL</span></div>
+    <button class="btn" onclick="go('pg-start')">↩ Switch</button><button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#071a07;color:#88ff88;border-color:var(--em) #021002 #021002 var(--em);">🏠 Home</button>
+  </div>
+  <div style="text-align:center;padding:10px 0 14px;"><div style="font-size:17px;font-weight:700;color:#aaa;">Where would you like to go?</div></div>
+  <div class="home-grid">
+    <div class="hnav hn4" onclick="goSchool('pg-school-chart')"><span class="hnav-ic">⛏</span><div class="hnav-title">TODAY'S CHART</div><div class="hnav-sub">Earn diamonds at school</div></div>
+    <div class="hnav hn2" onclick="go('pg-rules')"><span class="hnav-ic">📖</span><div class="hnav-title">RULES &amp; GOALS</div><div class="hnav-sub">How the game works</div></div>
+    <div class="hnav hn5" onclick="go('pg-train')"><span class="hnav-ic">🏆</span><div class="hnav-title">HERO TRAINING</div><div class="hnav-sub">Practice special skills</div></div>
+    <div class="hnav hn6" onclick="goSchool('pg-school-share')"><span class="hnav-ic">📬</span><div class="hnav-title">SEND REPORT</div><div class="hnav-sub">Share with family or teacher</div></div>
+  </div>
+  <div class="card" style="background:#06101a;border-color:var(--dia) #001a30 #001a30 var(--dia);">
+    <div style="font-family:var(--G);font-size:8px;color:#88aaff;margin-bottom:8px;line-height:1.8;">ABOUT SCHOOL MODE</div>
+    <div style="font-size:15px;font-weight:700;color:#99ccff;line-height:1.8;">The same four goals apply at school. The chart is built around the kindergarten schedule. Diamonds are recorded at the end of each block during the review - not in the middle of a lesson. This works best when the teacher or a helper is part of the check-in.</div>
+  </div>
+  <div style="text-align:center;margin-top:8px;"><button class="btn" onclick="go('pg-start')" style="padding:12px 20px;font-size:9px;">↩ Back to Home / School</button></div>
+  <div class="foot"><div class="foot-n">Sedrick Scott, M.S., Applied Behavioral Analysis</div><div class="foot-c">Using a trauma-informed, behavior-focused approach to support families</div></div>
+</div>
+
+<!-- ═══ SCHOOL CHART ═══ -->
+<div class="pg" id="pg-school-chart">
+  <div class="nav">
+    <div class="nav-logo" style="color:var(--dia);">⛏ SCHOOL CHART</div>
+    <div class="nav-r"><button class="btn" onclick="go('pg-school')">🏫</button><button class="btn" style="background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);" onclick="goSchool('pg-school-share')">📬</button><button class="btn" onclick="go('pg-start')" style="padding:7px 9px;font-size:7px;background:#071a07;color:#88ff88;border-color:var(--em) #021002 #021002 var(--em);">🏠 Home</button></div>
+  </div>
+  <div class="gstrip">
+    <div class="gchip gc1"><span class="gchip-i">👂</span><span class="gchip-l">LISTENING &amp;<br>DIRECTIONS</span></div>
+    <div class="gchip gc2"><span class="gchip-i">🦺</span><span class="gchip-l">STAYING<br>SAFE</span></div>
+    <div class="gchip gc3"><span class="gchip-i">🤲</span><span class="gchip-l">GENTLE<br>HANDS</span></div>
+    <div class="gchip gc4"><span class="gchip-i">🧘</span><span class="gchip-l">CALM-DOWN<br>TOOLS</span></div>
+  </div>
+  <div class="datebar">
+    <button class="darr" onclick="changeDay(-1);renderSchool();">◀</button>
+    <div class="dlbl" id="sdlbl">TODAY</div>
+    <button class="darr" onclick="changeDay(1);renderSchool();">▶</button>
+  </div>
+  <!-- Consistency reminder -->
+  <div class="sch-consistency">
+    <div class="sch-con-title">FOR TEACHERS - THIS IS HOW IT WORKS</div>
+    <div class="sch-con-body">This system only works when done consistently with him. At the <strong style="color:#fff;">start</strong> of each block: pick the reward and check in on feelings together. At the <strong style="color:#fff;">end</strong> of each block: go through the goals together and record his diamonds. It takes about 2-3 minutes each time. Skipping it breaks the consistency he needs to see results.</div>
+  </div>
+  <div class="sched-strip"><div class="sched-title">📅 KINDERGARTEN SCHEDULE - Current class shown with ▶</div><div id="sched-items"></div></div>
+  <div class="drbanner" onclick="pickSDaily()" style="border-color:#2255aa #001040 #001040 #2255aa;background:#06101a;">
+  <div class="drl" style="color:#6699cc;">🏆 TODAY'S SCHOOL GOAL</div><div class="drv" id="sdr-val">Tap to pick the school daily reward!</div><div class="drh" id="sdr-hint">Earn 10+ diamonds to unlock it</div></div>
+  <div class="tabs">
+    <button class="tab sch-on" id="stab0" onclick="setSTab(0)"><span class="tab-p">🌅 Morning</span><span class="tab-t">8:20 - 11:25</span><span class="tab-s" id="sts0">0/4 💎</span></button>
+    <button class="tab" id="stab1" onclick="setSTab(1)"><span class="tab-p">☀️ Midday</span><span class="tab-t">11:25 - 1:40</span><span class="tab-s" id="sts1">0/4 💎</span></button>
+    <button class="tab" id="stab2" onclick="setSTab(2)"><span class="tab-p">🏫 Afternoon</span><span class="tab-t">1:40 - 3:50</span><span class="tab-s" id="sts2">0/4 💎</span></button>
+  </div>
+  <div class="pp" id="spp"></div>
+  <div class="calm-wrap" id="calm-wrap-s">
+    <div class="card"><div class="h3" style="margin-top:0;">🧘 CALM-DOWN TOOLS</div>
+    <div class="calmg">
+      <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🌬️</span><span class="ctool-l">Dragon Breaths</span></div>
+      <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🤗</span><span class="ctool-l">Ask for help</span></div>
+      <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🦘</span><span class="ctool-l">Take a movement break</span></div>
+      <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🧸</span><span class="ctool-l">Squeeze something</span></div>
+      <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">💧</span><span class="ctool-l">Get some water</span></div>
+      <div class="ctool" onclick="pickTool(this)"><span class="ctool-i">🗣️</span><span class="ctool-l">Use my words</span></div>
+    </div></div>
+  </div>
+  <div class="sumrow" id="ssumrow"></div>
+  <div class="xpw"><div class="xpl" style="color:#6699cc;">SCHOOL DAY XP</div>
+    <div class="xpt-track" style="border-color:#1a1a1a #4466aa #4466aa #1a1a1a;">
+      <div class="xpf" id="sxpf" style="width:0%;background:var(--dia);"></div>
+      <div class="xpt-txt" id="sxpt">0/12 XP</div>
+    </div>
+  </div>
+  <div class="daytot" style="border-color:var(--dia) #001a30 #001a30 var(--dia);">
+    <div class="dt-l" style="color:#6699cc;">TOTAL SCHOOL DIAMONDS</div>
+    <div class="dt-r"><div class="dt-v" id="sdt-v" style="color:var(--dia);">0/12 💎</div><div class="dt-u" id="sdt-u" style="color:#88ccff;">🏆 School daily reward unlocked!</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+    <button class="btn" onclick="if(confirm('Reset school chart for today?')){const d=gd();Object.keys(d).filter(k=>k.startsWith('sc_')||k.startsWith('sp')||k==='sdR').forEach(k=>delete d[k]);sd(d);renderSchool();}" style="padding:14px;font-size:8px;color:#ffaaaa;background:#180606;border-color:#aa3333 #300000 #300000 #aa3333;line-height:1.8;">↺ Reset School Day</button>
+    <button class="btn" style="padding:14px;font-size:8px;line-height:1.8;background:#06101a;color:#88ccff;border-color:var(--dia) #001a30 #001a30 var(--dia);" onclick="goSchool('pg-school-share')">📬 Send Report</button>
+  </div>
+</div>
+
+<!-- ═══ SCHOOL SHARE ═══ -->
+<div class="pg" id="pg-school-share">
+  <div class="nav"><div class="nav-logo" style="color:var(--dia);">📬 SCHOOL REPORT</div><button class="btn" onclick="goSchool('pg-school-chart')">◀ Back</button></div>
+  <div class="card" style="background:#06101a;border-color:var(--dia) #001a30 #001a30 var(--dia);">
+    <div class="h2" style="color:#88ccff;margin-bottom:10px;">TODAY'S SCHOOL REPORT</div>
+    <div class="shrpt" id="s-shrpt" style="border-color:#2255aa;"></div>
+  </div>
+  <button class="sh-btn" id="s-gmailbtn" style="background:#060e1e;border-color:#3355cc #001040 #001040 #3355cc;color:#aabbff;">📧 Email to Parent or Teacher</button>
+  <button class="sh-btn sh-cp" onclick="sCopyReport()">📋 Copy Report</button>
+  <div id="s-cpconf" style="display:none;text-align:center;font-size:17px;font-weight:900;color:var(--dia);margin-bottom:14px;padding:12px;">Copied!</div>
+  <div style="font-size:15px;font-weight:700;color:#7777aa;text-align:center;margin-bottom:8px;">Share with the family and teacher at the end of the day!</div>
+  <div style="font-size:14px;font-weight:700;color:#445566;text-align:center;">Add an email address in ⚙ Settings (from the home chart) to use the email button.</div>
+</div>
+
+<!-- ═══ SCHOOL DAILY PICKER ═══ -->
+<div class="pg" id="pg-school-daily">
+  <div class="nav"><div class="nav-logo" style="color:var(--dia);">🏆 SCHOOL REWARD</div><button class="btn" onclick="goSchool('pg-school-chart')">✕ Skip</button></div>
+  <div class="h1" style="font-size:12px;margin-bottom:8px;color:var(--dia);">What's the school goal today?</div>
+  <div class="sub" style="margin-bottom:18px;">Earn 10+ diamonds to unlock this at school!</div>
+  <div class="pk-g" id="spk-g"></div>
+</div>
+
+</body>
+</html>
